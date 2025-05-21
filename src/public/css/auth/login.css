@@ -1,0 +1,112 @@
+/* login.css - ナチュラル系にカスタマイズ */
+
+body {
+    background: linear-gradient(135deg, #fdf6ec, #f3eee3);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    margin: 0;
+}
+
+.login-form__content {
+    background-color: #fffefc;
+    padding: 2.5rem 3rem;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(60, 179, 113, 0.15);
+    /* 緑系の柔らかい影 */
+    width: 100%;
+    max-width: 400px;
+}
+
+.login-form__heading h2 {
+    text-align: center;
+    margin-bottom: 1.8rem;
+    font-weight: 700;
+    font-size: 1.8rem;
+    color: #2e8b57;
+    /* 落ち着いた深緑 */
+}
+
+.form__group {
+    margin-bottom: 1.5rem;
+}
+
+.form__group-title {
+    margin-bottom: 0.5rem;
+}
+
+.form__label--item {
+    font-weight: 600;
+    color: #3cb371;
+    display: block;
+    font-size: 0.95rem;
+}
+
+.form__input--text input {
+    width: 100%;
+    padding: 0.55rem 0.75rem;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+.form__input--text input:focus {
+    outline: none;
+    border-color: #3cb371;
+    box-shadow: 0 0 8px rgba(60, 179, 113, 0.4);
+}
+
+.form__error {
+    color: #d9534f;
+    margin-top: 0.25rem;
+    font-size: 0.85rem;
+    min-height: 1.1rem;
+}
+
+.form__button {
+    margin-top: 2rem;
+}
+
+.form__button-submit {
+    width: 100%;
+    background: linear-gradient(135deg, #3cb371, #2e8b57);
+    border: none;
+    border-radius: 10px;
+    padding: 0.75rem;
+    font-size: 1.1rem;
+    color: #fff;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.4s ease;
+    box-shadow: 0 4px 15px rgba(60, 179, 113, 0.3);
+}
+
+.form__button-submit:hover {
+    background: linear-gradient(135deg, #2e8b57, #1f6f4d);
+}
+
+.register__link {
+    margin-top: 1.8rem;
+    text-align: center;
+}
+
+.register__button-submit {
+    display: inline-block;
+    color: #2e8b57;
+    text-decoration: none;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    border: 2px solid #2e8b57;
+    border-radius: 10px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.register__button-submit:hover {
+    background-color: #2e8b57;
+    color: white;
+}
