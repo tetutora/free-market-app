@@ -1,0 +1,105 @@
+/* common.css - ナチュラル系（緑＋ベージュ）スタイル */
+
+body {
+    margin: 0;
+    padding: 0;
+    display: block;
+}
+
+main {
+    padding-top: 80px;
+}
+
+.header {
+    background: #fffefc;
+    box-shadow: 0 2px 8px rgba(60, 179, 113, 0.15);
+    padding: 0.8rem 1.5rem;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.header__inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 1rem;
+}
+
+.header-utilities {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.header__logo {
+    font-weight: 900;
+    font-size: 1.6rem;
+    color: #2e8b57;
+    background: linear-gradient(135deg, #3cb371, #2e8b57);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    cursor: pointer;
+    text-decoration: none;
+    user-select: none;
+    transition: opacity 0.3s ease;
+}
+
+.header__logo:hover {
+    opacity: 0.8;
+}
+
+nav {
+    flex-grow: 1;
+}
+
+.header-nav {
+    list-style: none;
+    display: flex;
+    justify-content: flex-end;
+    gap: 1.3rem;
+    margin: 0;
+    padding: 0;
+}
+
+.header-nav__item {
+    display: flex;
+    align-items: center;
+}
+
+.header-nav__link {
+    text-decoration: none;
+    color: #2e8b57;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    white-space: nowrap;
+}
+
+.header-nav__link:hover {
+    background-color: #3cb371;
+    color: #fff;
+    box-shadow: 0 4px 10px rgba(60, 179, 113, 0.4);
+}
+
+.header-nav__button {
+    background: linear-gradient(135deg, #3cb371, #2e8b57);
+    border: none;
+    color: white;
+    font-weight: 700;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.4s ease;
+    box-shadow: 0 4px 12px rgba(60, 179, 113, 0.5);
+}
+
+.header-nav__button:hover {
+    background: linear-gradient(135deg, #2e8b57, #1f6f4d);
+}
