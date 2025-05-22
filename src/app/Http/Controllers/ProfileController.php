@@ -3,58 +3,64 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Redirect;
-use Illuminate\View\View;
+use Illuminate\Support\Facades\Storage;
+use App\Models\Address;
+use Illuminate\Http\Request;
+
 
 class ProfileController extends Controller
 {
-    /**
-     * Display the user's profile form.
-     */
-    public function edit(Request $request): View
+    // プロフィール編集フォームの表示
+    public function edit()
     {
-        return view('profile.edit', [
-            'user' => $request->user(),
-        ]);
+        $user = Auth::user();
+        $addresses = $user->addresses ?: [];
+
+        return view('profile.edit', compact('user', 'addresses'));
     }
 
-    /**
-     * Update the user's profile information.
-     */
-    public function update(ProfileUpdateRequest $request): RedirectResponse
+    // プロフィール更新処理
+    public function update(ProfileUpdateRequest $request)
     {
-        $request->user()->fill($request->validated());
+        $user = Auth::user();
+        $validated = $request->validated();
 
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
+        // プロフィール写真のアップロード処理
+        if ($request->hasFile('profile_picture')) {
+            if ($user->profile_picture) {
+                Storage::disk('public')->delete($user->profile_picture);
+            }
+            $path = $request->file('profile_picture')->store('profile_pictures', 'public');
+            $validated['profile_picture'] = $path;
         }
 
-        $request->user()->save();
-
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
-    }
-
-    /**
-     * Delete the user's account.
-     */
-    public function destroy(Request $request): RedirectResponse
-    {
-        $request->validateWithBag('userDeletion', [
-            'password' => ['required', 'current_password'],
+        // ユーザー情報の更新
+        $user->update([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'phone' => $validated['phone'] ?? '',
+            'profile_picture' => $validated['profile_picture'] ?? $user->profile_picture,
         ]);
 
-        $user = $request->user();
+        // 住所情報の更新
+        if (isset($validated['addresses'])) {
+            foreach ($validated['addresses'] as $addressData) {
+                // 少なくとも1項目が入力されていれば保存処理
+                if (collect($addressData)->filter()->isNotEmpty()) {
+                    $user->addresses()->updateOrCreate(
+                        ['user_id' => $user->id, 'postal_code' => $addressData['postal_code']],
+                        $addressData
+                    );
+                }
+            }
+        }
 
-        Auth::logout();
+        return redirect()->route('profile.edit')->with('success', 'プロフィールが更新されました。');
+    }
 
-        $user->delete();
-
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-
-        return Redirect::to('/');
+    public function showMypage()
+    {
+        return view('profile.mypage');
     }
 }

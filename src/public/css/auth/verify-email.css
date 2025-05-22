@@ -1,0 +1,62 @@
+.verify-container {
+    max-width: 600px;
+    margin: 3rem auto;
+    padding: 2rem 2.5rem;
+    background-color: #f5f2e7;
+    /* ベージュ */
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(139, 94, 60, 0.15);
+    /* ブラウン系の薄い影 */
+    font-family: 'Noto Sans JP', sans-serif;
+    color: #3b3b3b;
+}
+
+.verify-title {
+    color: #3cb371;
+    /* メイングリーン */
+    font-weight: 700;
+    font-size: 2.2rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 3px solid #8b5e3c;
+    /* ブラウンのライン */
+    padding-bottom: 0.3rem;
+}
+
+.alert-success {
+    background-color: #d4af37;
+    /* ゴールド */
+    color: white;
+    padding: 1rem 1.3rem;
+    border-radius: 6px;
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+    text-align: center;
+    box-shadow: 0 2px 6px rgba(212, 175, 55, 0.5);
+}
+
+.verify-message {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+    color: #5a4a33;
+}
+
+.verify-form {
+    text-align: center;
+}
+
+.btn-primary {
+    background-color: #3cb371;
+    border: none;
+    padding: 0.75rem 2rem;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #f5f2e7;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #369b5b;
+}

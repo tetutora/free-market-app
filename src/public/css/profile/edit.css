@@ -1,0 +1,173 @@
+/* 全体のスタイル */
+.container {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 30px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    background-color: #f5f2e7;
+}
+
+.container__title {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #3cb371;
+    /* グリーン */
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.profile-picture-preview {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #ccc;
+    margin-bottom: 20px;
+
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* フォーム項目 */
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group__label {
+    font-size: 1rem;
+    margin-bottom: 5px;
+    color: #555;
+}
+
+.form-control {
+    padding: 12px;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.form-control:focus {
+    border-color: #3cb371;
+    /* グリーン */
+    box-shadow: 0 0 5px rgba(60, 179, 113, 0.5);
+}
+
+.file-select-btn {
+    display: inline-block;
+    width: 120px;
+    /* ボタン幅調整 */
+    text-align: center;
+    cursor: pointer;
+    user-select: none;
+    /* すでにbtn btn-secondaryで色やパディングなどはあるので特に追加不要 */
+}
+
+/* エラーメッセージ */
+.text-danger {
+    font-size: 0.875rem;
+    color: #e74c3c;
+}
+
+/* ボタン */
+.btn {
+    padding: 12px 0;
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary {
+    background-color: #3cb371;
+    /* グリーン */
+    color: white;
+    font-weight: bold;
+}
+
+.btn-primary:hover {
+    background-color: #32a15b;
+}
+
+.btn-secondary {
+    background-color: #8b5e3c;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+}
+
+.btn-secondary:hover {
+    background-color: #7a4a32;
+}
+
+.btn-danger {
+    background-color: #e74c3c;
+    color: white;
+}
+
+.btn-danger:hover {
+    background-color: #c0392b;
+}
+
+/* アラートメッセージ */
+.alert-success {
+    background-color: #32a15b;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+/* 住所フォーム */
+.address-section__title {
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #3cb371;
+    /* グリーン */
+    margin-top: 30px;
+}
+
+#new-address-form {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #f5f2e7;
+    /* ベージュ */
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+#new-address-form:empty {
+    display: none;
+}
+
+#new-address-form .form-group {
+    margin-bottom: 15px;
+}
+
+/* レスポンシブ */
+@media (max-width: 600px) {
+    .container {
+        padding: 20px;
+    }
+
+    .container__title {
+        font-size: 1.5rem;
+    }
+
+    .btn {
+        font-size: 0.9rem;
+        padding: 10px 0;
+    }
+}

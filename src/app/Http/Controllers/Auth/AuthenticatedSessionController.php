@@ -23,7 +23,7 @@ class AuthenticatedSessionController extends Controller
         if (Auth::attempt($credentials, $request->filled('remember'))) {
             $request->session()->regenerate();
 
-            return redirect()->intended(route('home'));
+            return redirect()->intended(route('profile.mypage'));
         }
 
         return back()->withErrors([
