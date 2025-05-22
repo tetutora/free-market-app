@@ -1,0 +1,85 @@
+.product-detail-container {
+    display: flex;
+    gap: 40px;
+    padding: 20px;
+    background-color: #f5f2e7;
+    color: #3b3b3b;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.product-images {
+    flex: 1;
+    max-width: 500px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #fff;
+    padding: 10px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.product-images .main-image {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    border-radius: 4px;
+}
+
+.product-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 16px;
+}
+
+.product-name {
+    font-size: 28px;
+    font-weight: bold;
+    color: #8b5e3c;
+    /* メインのグリーン */
+}
+
+.product-price {
+    font-size: 24px;
+    font-weight: 700;
+    color: #3cb371;
+}
+
+.product-brand,
+.product-category,
+.product-condition {
+    font-size: 16px;
+    color: #555;
+}
+
+.product-description {
+    font-size: 16px;
+    line-height: 1.5;
+    color: #3b3b3b;
+    white-space: pre-wrap;
+}
+
+.btn {
+    width: fit-content;
+    padding: 12px 28px;
+    background-color: #3cb371;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn:hover {
+    background-color: #2e9e59;
+}
+
+.text-muted {
+    color: #999;
+    font-style: italic;
+    font-size: 16px;
+}

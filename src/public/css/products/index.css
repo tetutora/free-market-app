@@ -69,6 +69,10 @@ form#search-form button[type="submit"] {
     }
 }
 
+.mb-4 {
+    color: #8b5e3c;
+}
+
 .products-container {
     padding: 20px;
     background-color: #f5f2e7;
@@ -122,11 +126,11 @@ form#search-form button[type="submit"] {
 
 .product-name {
     font-size: 1.1rem;
-    font-weight: 600;
     margin: 0 0 10px 0;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    color: #8b5e3c;
 }
 
 .product-price {
