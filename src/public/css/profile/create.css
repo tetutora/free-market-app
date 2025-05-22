@@ -1,0 +1,127 @@
+/* profile/edit.css */
+
+.container {
+    max-width: 600px;
+    margin: 2rem auto;
+    background-color: #f5f2e7;
+    /* ベージュ系背景 */
+    padding: 2rem 2.5rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(139, 94, 60, 0.1);
+    /* 軽いブラウン影 */
+    font-family: 'Noto Sans JP', sans-serif;
+    color: #3b3b3b;
+}
+
+h1 {
+    color: #3cb371;
+    /* メイングリーン */
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    font-size: 1.8rem;
+    text-align: center;
+    letter-spacing: 0.05em;
+}
+
+.form-group {
+    margin-bottom: 1.3rem;
+}
+
+.form-group__label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #3b3b3b;
+}
+
+.form-control {
+    width: 100%;
+    padding: 0.5rem 0.7rem;
+    border: 1.8px solid #d4af37;
+    /* ゴールドアクセントの薄めの枠線 */
+    border-radius: 6px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: #3cb371;
+    box-shadow: 0 0 5px #3cb371aa;
+    background-color: #fff;
+}
+
+.text-danger {
+    margin-top: 0.25rem;
+    font-size: 0.875rem;
+    color: #b00020;
+    /* 赤系エラーカラー */
+}
+
+.btn {
+    padding: 12px 0;
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary {
+    background-color: #3cb371;
+    color: #f5f2e7;
+    /* ここで指定 */
+    text-align: center;
+}
+
+.btn-primary:hover {
+    background-color: #349a63;
+}
+
+.btn-secondary {
+    background-color: #8b5e3c;
+    color: #f5f2e7;
+    text-align: center;
+    text-decoration: none;
+}
+
+.btn-secondary:hover {
+    background-color: #744d2f;
+}
+
+.btn-danger {
+    background-color: #b14a40;
+    /* 優しい赤茶色 */
+    color: #f5f2e7;
+    margin-top: 1rem;
+    min-width: 140px;
+}
+
+.btn-danger:hover {
+    background-color: #8e3a33;
+}
+
+/* フォーム全体の余白 */
+.form {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 1.2rem 1.5rem;
+        margin: 1rem;
+    }
+
+    .btn {
+        min-width: auto;
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+    }
+
+    h1 {
+        font-size: 1.5rem;
+    }
+}
