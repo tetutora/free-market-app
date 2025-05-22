@@ -53,6 +53,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Address::class);
     }
 
+    public function favorites()
+    {
+        return $this->belongsToMany(Product::class, 'favorites')->withTimestamps();
+    }
+
     public function updateProfile(array $data, $profilePicture = null)
     {
         if ($profilePicture) {

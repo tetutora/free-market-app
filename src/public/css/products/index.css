@@ -139,6 +139,25 @@ form#search-form button[type="submit"] {
     color: #3cb371;
 }
 
+.price-favorite-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 6px;
+}
+
+.favorite-button {
+    background: none;
+    border: none;
+    font-size: 30px;
+    color: #d4af37;
+    cursor: pointer;
+}
+
+.favorite-button:hover {
+    color: #8b5e3c;
+}
+
 .pagination-wrapper {
     display: flex;
     flex-wrap: wrap;

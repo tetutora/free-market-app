@@ -55,9 +55,30 @@
                     </a>
                     <div class="product-info">
                         <h2 class="product-name" title="{{ $product->name }}">{{ $product->name }}</h2>
-                        <p class="product-price">¥{{ number_format($product->price) }}</p>
-                    </div>
-                </div>
+
+                        <div class="price-favorite-row">
+            <p class="product-price">¥{{ number_format($product->price) }}</p>
+
+            @auth
+                @if (auth()->user()->hasVerifiedEmail())
+                    @if (auth()->user()->favorites->contains($product->id))
+                        <form method="POST" action="{{ route('favorites.destroy', $product) }}">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="favorite-button">★</button>
+                        </form>
+                    @else
+                        <form method="POST" action="{{ route('favorites.store', $product) }}">
+                            @csrf
+                            <button type="submit" class="favorite-button">☆</button>
+                        </form>
+                    @endif
+                @endif
+            @endauth
+        </div>
+    </div>
+</div>
+
             @endforeach
         </div>
 
