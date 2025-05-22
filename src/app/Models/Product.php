@@ -25,4 +25,35 @@ class Product extends Model
     {
         return $this->belongsTo(Brand::class);
     }
+
+    public static function search(array $params)
+    {
+        $query = self::query();
+
+        if (!empty($params['keyword'])) {
+            $query->where('name', 'like', '%' . $params['keyword'] . '%');
+        }
+
+        if (!empty($params['category_id'])) {
+            $query->where('category_id', $params['category_id']);
+        } elseif (!empty($params['parent_category_id'])) {
+            $childCategoryIds = Category::where('parent_id', $params['parent_category_id'])->pluck('id')->toArray();
+
+            if (!empty($childCategoryIds)) {
+                $query->whereIn('category_id', $childCategoryIds);
+            } else {
+                $query->where('category_id', $params['parent_category_id']);
+            }
+        }
+
+        if (!empty($params['brand_id'])) {
+            $query->where('brand_id', $params['brand_id']);
+        }
+
+        if (isset($params['is_listed']) && $params['is_listed'] !== '') {
+            $query->where('is_listed', $params['is_listed']);
+        }
+
+        return $query->with(['brand', 'category']);
+    }
 }
