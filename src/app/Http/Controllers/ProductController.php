@@ -20,7 +20,13 @@ class ProductController extends Controller
     }
 
     public function show(Product $product)
-    {
-        return view('products.show', compact('product'));
-    }
+{
+    $otherProducts = Product::where('user_id', $product->user_id)
+        ->where('id', '!=', $product->id)
+        ->latest()
+        ->take(10)
+        ->get();
+
+    return view('products.show', compact('product', 'otherProducts'));
+}
 }
