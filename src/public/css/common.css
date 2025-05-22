@@ -103,3 +103,37 @@ nav {
 .header-nav__button:hover {
     background: linear-gradient(135deg, #2e8b57, #1f6f4d);
 }
+
+/* 例: public/css/common.css か別CSSに追加 */
+.modal {
+    display: none;
+    /* 初期非表示 */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    /* 半透明の背景 */
+    justify-content: center;
+    /* flex用センタリング */
+    align-items: center;
+    /* flex用センタリング */
+    z-index: 1000;
+    /* 他の要素より前面 */
+}
+
+.modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    max-width: 500px;
+    width: 90%;
+    box-sizing: border-box;
+}
+
+.modal-close {
+    cursor: pointer;
+    font-size: 24px;
+    float: right;
+}
