@@ -17,4 +17,26 @@ class Address extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public static function createForUser(array $data, int $userId)
+    {
+        $data['user_id'] = $userId;
+        return self::create($data);
+    }
+
+    public function updateForUser(array $data, int $userId)
+    {
+        if ($this->user_id !== $userId) {
+            abort(403, 'この住所を更新する権限がありません。');
+        }
+        return $this->update($data);
+    }
+
+    public function deleteForUser(int $userId)
+    {
+        if ($this->user_id !== $userId) {
+            abort(403, 'この住所を削除する権限がありません。');
+        }
+        return $this->delete();
+    }
 }
