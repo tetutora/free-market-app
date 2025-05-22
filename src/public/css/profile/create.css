@@ -1,21 +1,16 @@
-/* profile/edit.css */
-
 .container {
     max-width: 600px;
     margin: 2rem auto;
     background-color: #f5f2e7;
-    /* ベージュ系背景 */
     padding: 2rem 2.5rem;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(139, 94, 60, 0.1);
-    /* 軽いブラウン影 */
     font-family: 'Noto Sans JP', sans-serif;
     color: #3b3b3b;
 }
 
-h1 {
+.title {
     color: #3cb371;
-    /* メイングリーン */
     font-weight: 700;
     margin-bottom: 1.5rem;
     font-size: 1.8rem;
@@ -38,7 +33,6 @@ h1 {
     width: 100%;
     padding: 0.5rem 0.7rem;
     border: 1.8px solid #d4af37;
-    /* ゴールドアクセントの薄めの枠線 */
     border-radius: 6px;
     font-size: 1rem;
     transition: border-color 0.3s ease;
@@ -55,7 +49,6 @@ h1 {
     margin-top: 0.25rem;
     font-size: 0.875rem;
     color: #b00020;
-    /* 赤系エラーカラー */
 }
 
 .btn {
@@ -70,7 +63,6 @@ h1 {
 .btn-primary {
     background-color: #3cb371;
     color: #f5f2e7;
-    /* ここで指定 */
     text-align: center;
 }
 
@@ -91,7 +83,6 @@ h1 {
 
 .btn-danger {
     background-color: #b14a40;
-    /* 優しい赤茶色 */
     color: #f5f2e7;
     margin-top: 1rem;
     min-width: 140px;
@@ -101,7 +92,6 @@ h1 {
     background-color: #8e3a33;
 }
 
-/* フォーム全体の余白 */
 .form {
     margin-top: 1rem;
     display: flex;
@@ -121,7 +111,7 @@ h1 {
         font-size: 0.9rem;
     }
 
-    h1 {
+    .title {
         font-size: 1.5rem;
     }
 }

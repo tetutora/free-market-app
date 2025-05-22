@@ -52,4 +52,26 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(Address::class);
     }
+
+    public function updateProfile(array $data, $profilePicture = null)
+    {
+        if ($profilePicture) {
+            if ($this->profile_picture) {
+                Storege::disk('public')->delete($this->profile_picture);
+            }
+            $path = $profilePicture->store('profile_pictures', 'public');
+            $data['profile_picture'] = $path;
+        }
+
+        $this->fill([
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'phone' => $data['phone'],
+            'profile_picture' => $data['profile_picture'] ?? $this->profile_picture,
+        ]);
+
+        $this->save();
+
+        return $this;
+    }
 }

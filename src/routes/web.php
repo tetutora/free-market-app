@@ -6,10 +6,10 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use App\Http\Controllers\AddressController;
+use App\Http\Controllers\ProductController;
 
-Route::get('/', function () {
-    return view('index');
-})->name('home');
+Route::get('/', [ProductController::class, 'index'])->name('home');
+Route::get('/products/{product}', [ProductController::class, 'show'])->name('products.show');
 
 Route::get('/email/verify', function () {
     return view('auth.verify-email');

@@ -19,54 +19,50 @@ class ProfileUpdateRequest extends FormRequest
                 'max:255',
                 Rule::unique(User::class)->ignore($this->user()->id),
             ],
+            'phone' => ['nullable', 'string', 'max:20'],
 
-            // 住所1は必須
-            'addresses.0.postal_code' => ['required', 'string', 'max:20'],
-            'addresses.0.prefecture' => ['required', 'string', 'max:255'],
-            'addresses.0.city' => ['required', 'string', 'max:255'],
-            'addresses.0.street' => ['required', 'string', 'max:255'],
-            'addresses.0.building' => ['nullable', 'string', 'max:255'],
-            'addresses.0.phone' => ['nullable', 'string', 'max:20'], // 住所1の電話番号（任意）
-
-            // 住所2以降は一旦nullableで受け取る（基本的な型チェック）
-            'addresses.*.postal_code' => ['nullable', 'string', 'max:20'],
-            'addresses.*.prefecture' => ['nullable', 'string', 'max:255'],
-            'addresses.*.city' => ['nullable', 'string', 'max:255'],
-            'addresses.*.street' => ['nullable', 'string', 'max:255'],
-            'addresses.*.building' => ['nullable', 'string', 'max:255'],
-            'addresses.*.phone' => ['nullable', 'string', 'max:20'],
+            'postal_code' => 'required|string|max:20',
+            'prefecture' => 'required|string|max:20',
+            'city' => 'required|string|max:20',
+            'street' => 'required|string|max:20',
+            'building' => 'nullable|string|max:20',
         ];
     }
 
-    public function withValidator($validator)
+    public function messages(): array
     {
-        $validator->after(function ($validator) {
-            $addresses = $this->input('addresses', []);
+        return [
+            'name.required' => 'ユーザー名は必須です。',
+            'name.string' => 'ユーザー名は文字列で入力してください。',
+            'name.max' => 'ユーザー名は:max文字以内で入力してください。',
 
-            foreach ($addresses as $index => $address) {
-                if ($index === 0) continue; // 住所1は別途必須バリデーション済み
+            'email.required' => 'メールアドレスは必須です。',
+            'email.string' => 'メールアドレスは文字列で入力してください。',
+            'email.email' => '有効なメールアドレスを入力してください。',
+            'email.max' => 'メールアドレスは:max文字以内で入力してください。',
+            'email.unique' => 'このメールアドレスは既に使用されています。',
 
-                // 住所2以降で「どれか1つでも入力があれば必須項目チェック」
-                $fieldsToCheck = ['postal_code', 'prefecture', 'city', 'street', 'phone'];
-                $hasAnyValue = false;
-                foreach ($fieldsToCheck as $field) {
-                    if (!empty($address[$field])) {
-                        $hasAnyValue = true;
-                        break;
-                    }
-                }
+            'phone.string' => '電話番号は文字列で入力してください。',
+            'phone.max' => '電話番号は:max文字以内で入力してください。',
 
-                if ($hasAnyValue) {
-                    foreach ($fieldsToCheck as $field) {
-                        if (empty($address[$field])) {
-                            $validator->errors()->add(
-                                "addresses.$index.$field",
-                                "住所" . ($index + 1) . "の{$field}は必須です。"
-                            );
-                        }
-                    }
-                }
-            }
-        });
+            'postal_code.required' => '郵便番号は必須です。',
+            'postal_code.string' => '郵便番号は文字列で入力してください。',
+            'postal_code.max' => '郵便番号は:max文字以内で入力してください。',
+
+            'prefecture.required' => '都道府県は必須です。',
+            'prefecture.string' => '都道府県は文字列で入力してください。',
+            'prefecture.max' => '都道府県は:max文字以内で入力してください。',
+
+            'city.required' => '市区町村は必須です。',
+            'city.string' => '市区町村は文字列で入力してください。',
+            'city.max' => '市区町村は:max文字以内で入力してください。',
+
+            'street.required' => '番地は必須です。',
+            'street.string' => '番地は文字列で入力してください。',
+            'street.max' => '番地は:max文字以内で入力してください。',
+
+            'building.string' => '建物名は文字列で入力してください。',
+            'building.max' => '建物名は:max文字以内で入力してください。',
+        ];
     }
 }

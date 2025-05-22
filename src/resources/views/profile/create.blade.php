@@ -6,7 +6,7 @@
 
 @section('content')
 <div class="container">
-    <h1>{{ isset($address) ? '住所を編集' : '住所を追加' }}</h1>
+    <h1 class="title">{{ isset($address) ? '住所を編集' : '住所を追加' }}</h1>
 
     <form action="{{ isset($address) ? route('addresses.update', $address) : route('addresses.store') }}" method="POST" class="form">
         @csrf
@@ -14,11 +14,37 @@
             @method('PATCH')
         @endisset
 
-        <x-form.input name="postal_code" label="郵便番号" :value="$address->postal_code ?? ''" />
-        <x-form.input name="prefecture" label="都道府県" :value="$address->prefecture ?? ''" />
-        <x-form.input name="city" label="市区町村" :value="$address->city ?? ''" />
-        <x-form.input name="street" label="番地" :value="$address->street ?? ''" />
-        <x-form.input name="building" label="建物名" :value="$address->building ?? ''" />
+        <x-form.input
+    name="postal_code"
+    label="郵便番号"
+    :value="$address->postal_code ?? ''"
+    :error="$errors->first('postal_code')"
+/>
+<x-form.input
+    name="prefecture"
+    label="都道府県"
+    :value="$address->prefecture ?? ''"
+    :error="$errors->first('prefecture')"
+/>
+<x-form.input
+    name="city"
+    label="市区町村"
+    :value="$address->city ?? ''"
+    :error="$errors->first('city')"
+/>
+<x-form.input
+    name="street"
+    label="番地"
+    :value="$address->street ?? ''"
+    :error="$errors->first('street')"
+/>
+<x-form.input
+    name="building"
+    label="建物名"
+    :value="$address->building ?? ''"
+    :error="$errors->first('building')"
+/>
+
 
         <button type="submit" class="btn btn-primary">
             {{ isset($address) ? '更新する' : '追加する' }}
