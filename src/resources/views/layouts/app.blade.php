@@ -28,7 +28,7 @@
                             <a class="header-nav__link" href="/items/create">出品</a>
                         </li>
                         <li class="header-nav__item">
-                            <form action="/logout" method="post">
+                            <form method="POST" action="{{ route('logout') }}">
                                 @csrf
                                 <button class="header-nav__button">ログアウト</button>
                             </form>

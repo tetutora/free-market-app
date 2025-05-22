@@ -1,23 +1,31 @@
-/* login.css - ナチュラル系にカスタマイズ */
-
 body {
     background: linear-gradient(135deg, #fdf6ec, #f3eee3);
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color: #333;
     min-height: 100vh;
-    display: flex;
     justify-content: center;
     align-items: center;
     padding: 1rem;
     margin: 0;
+    background-image: url('/storage/images/natural-background.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-blend-mode: overlay;
+}
+
+.login-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
 }
 
 .login-form__content {
     background-color: #fffefc;
-    padding: 2.5rem 3rem;
+    padding: 2.5rem 5rem;
     border-radius: 12px;
     box-shadow: 0 8px 20px rgba(60, 179, 113, 0.15);
-    /* 緑系の柔らかい影 */
     width: 100%;
     max-width: 400px;
 }
@@ -28,7 +36,6 @@ body {
     font-weight: 700;
     font-size: 1.8rem;
     color: #2e8b57;
-    /* 落ち着いた深緑 */
 }
 
 .form__group {
