@@ -1,0 +1,124 @@
+.user-profile-container {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 0 15px;
+    font-family: 'Noto Sans JP', sans-serif;
+    color: #5a4b3a;
+}
+
+.profile-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.profile-image {
+    width: 130px;
+    height: 130px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 2px solid #8b5e3c;
+    box-shadow: 0 3px 6px rgba(139, 94, 60, 0.2);
+}
+
+.profile-header h1 {
+    font-weight: 700;
+    font-size: 28px;
+    margin: 15px 0 8px;
+    color: #3cb371;
+}
+
+.introduction {
+    font-size: 16px;
+    color: #7a6a58;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.5;
+}
+
+.user-products-section h2 {
+    font-size: 22px;
+    color: #8b5e3c;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #d4af37;
+    padding-bottom: 6px;
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 20px;
+}
+
+.product-card {
+    background: #fff;
+    border: 1.5px solid #dcd2c1;
+    border-radius: 12px;
+    box-shadow: 0 3px 6px rgba(139, 94, 60, 0.1);
+    overflow: hidden;
+    text-align: center;
+    cursor: pointer;
+    transition: box-shadow 0.3s ease, transform 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    height: 270px;
+    justify-content: space-between;
+}
+
+.product-card:hover {
+    box-shadow: 0 8px 14px rgba(60, 179, 113, 0.3);
+    transform: translateY(-6px);
+}
+
+.product-card img {
+    width: 100%;
+    height: 170px;
+    object-fit: cover;
+    border-bottom: 1px solid #dcd2c1;
+}
+
+.product-card p {
+    margin: 10px 12px 8px;
+    color: #3b3b3b;
+    font-weight: 600;
+    font-size: 14px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.product-card p:last-child {
+    color: #3cb371;
+    font-weight: 700;
+    font-size: 16px;
+}
+
+.btn-primary {
+    background-color: #3cb371;
+    color: white;
+    border: none;
+    padding: 6px 14px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #2e8b57;
+}
+
+.btn-secondary {
+    background-color: #f5f2e7;
+    color: #3cb371;
+    border: 1px solid #3cb371;
+    padding: 6px 14px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.btn-secondary:hover {
+    background-color: #3cb371;
+    color: white;
+}

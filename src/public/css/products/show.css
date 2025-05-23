@@ -36,7 +36,6 @@
     font-size: 28px;
     font-weight: bold;
     color: #8b5e3c;
-    /* メインのグリーン */
 }
 
 .product-price {
@@ -51,24 +50,57 @@
     gap: 16px;
 }
 
+.interaction-buttons {
+    display: flex;
+    gap: 32px;
+    align-items: center;
+}
+
+.favorite-block,
+.comment-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    user-select: none;
+}
+
+.favorite-block form,
 .favorite-button {
+    margin: 0;
+    margin-bottom: 3px;
+    padding: 0;
     background: none;
     border: none;
-    font-size: 18px;
-    color: #ffcc00;
     cursor: pointer;
-    margin-left: 10px;
+    font-size: 28px;
+    color: #d4af37;
+    line-height: 1;
     transition: transform 0.2s ease;
 }
 
-.favorite-button.large {
-    font-size: 32px;
-    margin-left: 0;
+.favorite-block form:hover .favorite-button {
+    transform: scale(1.15);
 }
 
-.favorite-button:hover {
-    opacity: 0.7;
-    transform: scale(1.1);
+.comment-block {
+    cursor: default;
+    color: #555;
+    font-size: 28px;
+    /* コメントアイコンのサイズ */
+}
+
+.comment-icon {
+    display: block;
+    line-height: 1;
+    margin-bottom: 4px;
+}
+
+.count-text {
+    margin-top: 4px;
+    font-size: 16px;
+    color: #333;
+    text-align: center;
+    min-width: 24px;
 }
 
 .product-brand,
@@ -108,6 +140,90 @@
     color: #999;
     font-style: italic;
     font-size: 16px;
+}
+
+.comment-section {
+    margin-top: 40px;
+    padding: 20px;
+    border-top: 1px solid #ccc;
+    background-color: #fafafa;
+}
+
+.comment {
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.comment-header {
+    display: flex;
+    align-items: flex-start;
+}
+
+.comment-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 15px;
+}
+
+.comment-user {
+    font-weight: bold;
+    margin: 0;
+    font-size: 16px;
+}
+
+.comment-body {
+    margin: 5px 0;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.comment-date {
+    font-size: 12px;
+    color: #888;
+}
+
+.comment-form {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.comment-form textarea {
+    resize: vertical;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.comment-form .btn {
+    align-self: flex-end;
+    background-color: #3cb371;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    font-size: 14px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.comment-form .btn:hover {
+    background-color: #339966;
+}
+
+.seller-link {
+    color: #3cb371;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.seller-link:hover {
+    color: #2e9e59;
+    text-decoration: underline;
 }
 
 .seller-products-section {
@@ -159,4 +275,10 @@
 .seller-product-card .price {
     font-weight: bold;
     font-size: 14px;
+}
+
+.error-message {
+    color: red;
+    font-size: 14px;
+    margin-top: 4px;
 }

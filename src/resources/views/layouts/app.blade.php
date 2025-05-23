@@ -25,7 +25,7 @@
                             <a class="header-nav__link" href="/mypage">マイページ</a>
                         </li>
                         <li class="header-nav__item">
-                            <a class="header-nav__link" href="/items/create">出品</a>
+                            <a class="header-nav__link" href="{{ route('products.create') }}">出品</a>
                         </li>
                         <li class="header-nav__item">
                             <form method="POST" action="{{ route('logout') }}">

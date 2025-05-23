@@ -31,6 +31,16 @@ class Product extends Model
         return $this->belongsToMany(User::class, 'favorites')->withTimestamps();
     }
 
+    public function favorites()
+    {
+        return $this->belongsToMany(User::class, 'favorites')->withTimestamps();
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
     public static function search(array $params)
     {
         $query = self::query();

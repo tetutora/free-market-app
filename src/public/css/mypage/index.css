@@ -1,0 +1,235 @@
+body {
+    background-color: #f5f2e7;
+}
+
+.mypage-container {
+    max-width: 1500px;
+    margin: 20px auto 40px;
+    padding: 0 20px 40px;
+    height: 100vh;
+    border-radius: 10px;
+    font-family: "Noto Sans JP", sans-serif;
+    color: #3b3b3b;
+    position: relative;
+}
+
+.notification-icon-wrapper {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+}
+
+.notification-icon-wrapper a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    color: #3cb371;
+    background-color: #f5f2e7;
+    border: 2px solid #8b5e3c;
+    border-radius: 50%;
+    box-shadow: 0 2px 6px rgba(139, 94, 60, 0.2);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.notification-icon-wrapper a:hover {
+    background-color: #3cb371;
+    color: #f5f2e7;
+}
+
+.notification-icon-wrapper svg {
+    width: 24px;
+    height: 24px;
+}
+
+.notification-badge {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    background-color: #d4af37;
+    color: white;
+    font-weight: 700;
+    font-size: 12px;
+    min-width: 20px;
+    height: 20px;
+    line-height: 20px;
+    padding: 0 6px;
+    border-radius: 9999px;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.15);
+    user-select: none;
+    pointer-events: none;
+    text-align: center;
+}
+
+.profile-section {
+    text-align: center;
+    padding: 30px 0;
+    border-bottom: 1px solid #dcd2c1;
+}
+
+.profile-image {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 50%;
+    box-shadow: 0 2px 8px rgba(139, 94, 60, 0.15);
+    margin-bottom: 15px;
+}
+
+.profile-section h2 {
+    font-size: 24px;
+    font-weight: 700;
+    color: #3b3b3b;
+    margin-bottom: 12px;
+}
+
+.profile-section .btn {
+    display: inline-block;
+    background-color: #3cb371;
+    color: white;
+    padding: 10px 28px;
+    border-radius: 25px;
+    font-weight: 600;
+    text-decoration: none;
+    box-shadow: 0 4px 6px rgba(60, 179, 113, 0.4);
+    transition: background-color 0.3s ease;
+}
+
+.profile-section .btn:hover {
+    background-color: #2e8b57;
+}
+
+.tabs {
+    margin-top: 30px;
+}
+
+.tab-buttons {
+    display: flex;
+    gap: 14px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.tab-button {
+    background-color: #f5f2e7;
+    color: #8b5e3c;
+    border: 2px solid #8b5e3c;
+    padding: 8px 22px;
+    border-radius: 25px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 120px;
+    text-align: center;
+    user-select: none;
+}
+
+.tab-button.active,
+.tab-button:hover {
+    background-color: #8b5e3c;
+    color: #f5f2e7;
+    border-color: #8b5e3c;
+}
+
+.tab-content {
+    display: none;
+    animation: fadeIn 0.4s ease forwards;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 20px;
+    margin-top: 25px;
+    padding-bottom: 40px;
+}
+
+.product-card {
+    background-color: #fff;
+    border: 1.5px solid #dcd2c1;
+    border-radius: 12px;
+    box-shadow: 0 3px 6px rgba(139, 94, 60, 0.1);
+    overflow: hidden;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    transition: box-shadow 0.3s ease, transform 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 270px;
+}
+
+.product-card:hover {
+    box-shadow: 0 8px 14px rgba(60, 179, 113, 0.3);
+    transform: translateY(-6px);
+}
+
+.product-card img {
+    width: 100%;
+    height: 170px;
+    object-fit: cover;
+    border-bottom: 1px solid #dcd2c1;
+}
+
+.product-card p {
+    margin: 10px 12px 8px;
+    color: #3b3b3b;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 1.3;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.product-card p:last-child {
+    color: #3cb371;
+    /* メイングリーン */
+    font-weight: 700;
+    font-size: 16px;
+}
+
+/* 商品がない場合のテキスト */
+.mypage-container>p {
+    text-align: center;
+    font-size: 16px;
+    color: #8b5e3c;
+    margin-top: 40px;
+}
+
+.followings-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.following-user-card {
+    width: 100px;
+    text-align: center;
+}
+
+.profile-thumb {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-bottom: 0.5rem;
+}
