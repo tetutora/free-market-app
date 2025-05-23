@@ -1,4 +1,4 @@
-商品詳細@extends('layouts.app')
+@extends('layouts.app')
 
 @section('css')
 <link rel="stylesheet" href="{{ asset('css/products/show.css') }}">
@@ -15,45 +15,52 @@
         <img src="{{ $imgSrc }}" alt="{{ $product->name }}" class="main-image">
     </div>
 
-    <div class="product-info">
-        <h1 class="product-name">{{ $product->name }}</h1>
-        <div class="price-favorite-row">
-            <p class="product-price">¥{{ number_format($product->price) }}</p>
+    <x-product.info :product="$product" />
+</div>
 
-            @auth
-                @if (auth()->user()->hasVerifiedEmail())
-                    @if (auth()->user()->favorites->contains($product->id))
-                        <form method="POST" action="{{ route('favorites.destroy', $product) }}">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="favorite-button large">★</button>
-                        </form>
-                    @else
-                        <form method="POST" action="{{ route('favorites.store', $product) }}">
-                            @csrf
-                            <button type="submit" class="favorite-button large">☆</button>
-                        </form>
-                    @endif
-                @endif
-            @endauth
+<div class="comment-section">
+    <h2>コメント</h2>
+
+    @foreach ($product->comments()->latest()->get() as $comment)
+        @php
+            $image = $comment->user->profile_image ?? 'images/default-profile.png';
+            $isUrl = (strpos($image, 'http://') === 0 || strpos($image, 'https://') === 0);
+            $imgSrc = $isUrl ? $image : asset('storage/' . $image);
+        @endphp
+
+        <div class="comment">
+            <div class="comment-header">
+                <img src="{{ $imgSrc }}" alt="{{ $comment->user->name }}" class="comment-avatar">
+                <div>
+                    <p class="comment-user">{{ $comment->user->name }}</p>
+                    <p class="comment-body">{{ $comment->body }}</p>
+                    <p class="comment-date">{{ $comment->created_at->format('Y/m/d H:i') }}</p>
+                </div>
+            </div>
         </div>
+    @endforeach
 
-        <p class="product-brand">ブランド: {{ $product->brand ? $product->brand->name : 'なし' }}</p>
-        <p class="product-category">カテゴリ: {{ $product->category ? $product->category->name : 'なし' }}</p>
-        <p class="product-condition">状態: {{ $product->condition }}</p>
-        <p class="product-description">{{ $product->description }}</p>
-
-        @if($product->is_listed)
-            <button class="btn btn-primary">購入する</button>
-        @else
-            <p class="text-muted">売り切れです</p>
-        @endif
-    </div>
+    @auth
+        <form action="{{ route('comments.store', $product) }}" method="POST" class="comment-form">
+            @csrf
+            <textarea name="body" rows="3" placeholder="コメントを入力…"></textarea>
+            @error('body')
+                <span class="error-message">{{ $message }}</span>
+            @enderror
+            <button type="submit" class="btn">投稿</button>
+        </form>
+    @else
+        <p><a href="{{ route('login') }}">ログイン</a>するとコメントできます。</p>
+    @endauth
 </div>
 
 @if ($otherProducts->count())
     <div class="seller-products-section">
-        <h2>この出品者の他の商品</h2>
+        <h2>
+            <a href="{{ route('users.show', $product->user->id) }}" class="seller-link">
+                {{ $product->user->name }}さんの他の商品
+            </a>
+        </h2>
         <div class="seller-products-scroll">
             @foreach ($otherProducts as $other)
                 @php
@@ -70,5 +77,4 @@
         </div>
     </div>
 @endif
-
 @endsection

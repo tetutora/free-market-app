@@ -4,10 +4,8 @@ form#search-form {
     gap: 14px;
     align-items: center;
     margin-bottom: 24px;
-    background-color: #f5f2e7;
     padding: 16px 20px;
     border-radius: 12px;
-    box-shadow: 0 4px 8px rgba(139, 94, 60, 0.15);
     user-select: none;
 }
 
