@@ -18,10 +18,8 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->unsignedInteger('price');
             $table->string('image_path')->nullable();
-            $table->foreignId('category_id')->nullable()->constrained('categories')->onDelete('set null');
             $table->string('condition');
             $table->boolean('is_listed')->default(true);
-            $table->foreignId('brand_id')->nullable()->constrained()->onDelete('set null');
             $table->timestamps();
         });
     }

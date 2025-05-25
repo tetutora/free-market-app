@@ -6,13 +6,30 @@
 
 @section('content')
 <div class="product-detail-container">
-    <div class="product-images">
-        @php
-            $image = $product->image_path;
-            $isUrl = (strpos($image, 'http://') === 0 || strpos($image, 'https://') === 0);
-            $imgSrc = $isUrl ? $image : asset('storage/' . $image);
-        @endphp
-        <img src="{{ $imgSrc }}" alt="{{ $product->name }}" class="main-image">
+    @php
+        $images = $product->images;
+        $imgPaths = $images->map(function($img) {
+            if (empty($img->path)) {
+                return asset('images/no-image.png');
+            } elseif (filter_var($img->path, FILTER_VALIDATE_URL)) {
+                return $img->path;
+            } else {
+                return asset('storage/' . $img->path);
+            }
+        })->toArray();
+
+        if (empty($imgPaths)) {
+            $imgPaths = [asset('images/no-image.png')];
+        }
+    @endphp
+
+    <div class="product-images" data-images='@json($imgPaths)'>
+        <img id="main-image" src="{{ $imgPaths[0] }}" alt="{{ $product->name }}" class="main-image">
+
+        @if(count($imgPaths) > 1)
+            <div class="arrow left" id="prev-arrow">&#8249;</div>
+            <div class="arrow right" id="next-arrow">&#8250;</div>
+        @endif
     </div>
 
     <x-product.info :product="$product" />
@@ -64,9 +81,15 @@
         <div class="seller-products-scroll">
             @foreach ($otherProducts as $other)
                 @php
-                    $image = $other->image_path;
-                    $isUrl = (strpos($image, 'http://') === 0 || strpos($image, 'https://') === 0);
-                    $imgSrc = $isUrl ? $image : asset('storage/' . $image);
+                    $image = $other->images->first()->path ?? null;
+
+                    if (empty($image)) {
+                        $imgSrc = asset('images/no-image.png');
+                    } elseif (filter_var($image, FILTER_VALIDATE_URL)) {
+                        $imgSrc = $image;
+                    } else {
+                        $imgSrc = asset('storage/' . $image);
+                    }
                 @endphp
                 <a href="{{ route('products.show', $other->id) }}" class="seller-product-card">
                     <img src="{{ $imgSrc }}" alt="{{ $other->name }}">
@@ -77,4 +100,8 @@
         </div>
     </div>
 @endif
+@endsection
+
+@section('js')
+<script src="{{ asset('js/products-show.js') }}"></script>
 @endsection

@@ -15,9 +15,9 @@
 
 label {
     display: block;
-    margin-top: 1rem;
-    font-weight: bold;
-    color: #333;
+    margin-top: 1.5rem;
+    font-weight: 700;
+    color: #3b3b3b;
 }
 
 input[type="text"],
@@ -29,6 +29,7 @@ select {
     border: 1px solid #ccc;
     border-radius: 5px;
     margin-top: 0.5rem;
+    box-sizing: border-box;
 }
 
 textarea {
@@ -40,14 +41,69 @@ input[type="checkbox"] {
     margin-right: 0.5rem;
 }
 
+/* ファイル選択ボタンのスタイル */
+input[type="file"] {
+    display: block;
+    margin-top: 0.5rem;
+    padding: 0.5rem 1rem;
+    background-color: #8b5e3c;
+    /* ブラウン系 */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+}
+
+input[type="file"]:hover {
+    background-color: #d4af37;
+    /* ゴールド系アクセント */
+}
+
+/* 複数選択のselectボックスをいい感じに */
+select[multiple] {
+    width: 100%;
+    min-height: 120px;
+    padding: 0.75rem 1rem;
+    margin-top: 0.5rem;
+    border: 1.5px solid #3cb371;
+    /* メイングリーン */
+    border-radius: 8px;
+    background-color: #f5f2e7;
+    /* ベージュ背景 */
+    color: #333;
+    font-size: 1rem;
+    font-weight: 500;
+    box-sizing: border-box;
+    overflow-y: auto;
+}
+
+/* selectのoptionのホバーと選択時の色 */
+select[multiple] option:hover {
+    background-color: #d4af37;
+    /* ゴールド */
+    color: #fff;
+    cursor: pointer;
+}
+
+select[multiple] option:checked {
+    background-color: #3cb371;
+    /* メイングリーン */
+    color: #fff;
+    font-weight: 700;
+}
+
 button[type="submit"] {
-    margin-top: 1.5rem;
+    margin-top: 2rem;
     background-color: #3cb371;
     color: white;
     padding: 0.75rem 1.5rem;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    font-weight: 700;
+    transition: background-color 0.3s ease;
 }
 
 button[type="submit"]:hover {
@@ -66,4 +122,10 @@ button[type="submit"]:hover {
 img#imagePreview {
     border: 1px solid #ccc;
     border-radius: 5px;
+}
+
+.error-message {
+    color: red;
+    font-size: 0.9rem;
+    margin-top: 4px;
 }

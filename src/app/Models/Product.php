@@ -8,7 +8,7 @@ class Product extends Model
 {
     protected $fillable = [
         'user_id', 'name', 'description', 'price', 'image_path',
-        'category_id', 'condition', 'is_listed', 'brand_id'
+        'condition', 'is_listed'
     ];
 
     public function user()
@@ -16,14 +16,14 @@ class Product extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function category()
+    public function brands()
     {
-        return $this->belongsTo(Category::class);
+        return $this->belongsToMany(Brand::class);
     }
 
-    public function brand()
+    public function categories()
     {
-        return $this->belongsTo(Brand::class);
+        return $this->belongsToMany(Category::class);
     }
 
     public function favoritedByUsers()
@@ -41,34 +41,44 @@ class Product extends Model
         return $this->hasMany(Comment::class);
     }
 
-    public static function search(array $params)
+    public function images()
     {
-        $query = self::query();
+        return $this->hasMany(ProductImage::class);
+    }
 
+    public function scopeSearch($query, array $params)
+    {
         if (!empty($params['keyword'])) {
             $query->where('name', 'like', '%' . $params['keyword'] . '%');
         }
 
         if (!empty($params['category_id'])) {
-            $query->where('category_id', $params['category_id']);
+            $query->whereHas('categories', function ($q) use ($params) {
+                $q->where('categories.id', $params['category_id']);
+            });
         } elseif (!empty($params['parent_category_id'])) {
             $childCategoryIds = Category::where('parent_id', $params['parent_category_id'])->pluck('id')->toArray();
-
             if (!empty($childCategoryIds)) {
-                $query->whereIn('category_id', $childCategoryIds);
+                $query->whereHas('categories', function ($q) use ($childCategoryIds) {
+                    $q->whereIn('categories.id', $childCategoryIds);
+                });
             } else {
-                $query->where('category_id', $params['parent_category_id']);
+                $query->whereHas('categories', function ($q) use ($params) {
+                    $q->where('categories.id', $params['parent_category_id']);
+                });
             }
         }
 
         if (!empty($params['brand_id'])) {
-            $query->where('brand_id', $params['brand_id']);
+            $query->whereHas('brands', function ($q) use ($params) {
+                $q->where('brands.id', $params['brand_id']);
+            });
         }
 
         if (isset($params['is_listed']) && $params['is_listed'] !== '') {
             $query->where('is_listed', $params['is_listed']);
         }
 
-        return $query->with(['brand', 'category']);
+        return $query->with(['brands', 'categories']);
     }
 }

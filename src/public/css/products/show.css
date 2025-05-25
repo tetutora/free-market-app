@@ -24,6 +24,51 @@
     border-radius: 4px;
 }
 
+.product-images {
+    position: relative;
+    width: 400px;
+    /* お好みで調整 */
+    margin: auto;
+}
+
+.product-images img.main-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 4px;
+    object-fit: contain;
+}
+
+.arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 2rem;
+    color: #333;
+    background: rgba(255, 255, 255, 0.7);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    cursor: pointer;
+    user-select: none;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s;
+}
+
+.arrow:hover {
+    background: rgba(255, 255, 255, 1);
+}
+
+.arrow.left {
+    left: 10px;
+}
+
+.arrow.right {
+    right: 10px;
+}
+
 .product-info {
     flex: 1;
     display: flex;

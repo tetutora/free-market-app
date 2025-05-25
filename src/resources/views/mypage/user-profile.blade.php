@@ -36,10 +36,16 @@
         <div class="product-grid">
             @foreach ($products as $product)
                 @php
-                    $image = $product->image_path;
-                    $isUrl = (strpos($image, 'http://') === 0 || strpos($image, 'https://') === 0);
-                    $imgSrc = $isUrl ? $image : asset('storage/' . $image);
-                @endphp
+                $image = $product->images->first()->path ?? null;
+
+                if (empty($image)) {
+                    $imgSrc = asset('images/no-image.png');
+                } else if (filter_var($image, FILTER_VALIDATE_URL)) {
+                    $imgSrc = $image;
+                } else {
+                    $imgSrc = asset('storage/' . $image);
+                }
+            @endphp
                 <a href="{{ route('products.show', $product->id) }}" class="product-card">
                     <img src="{{ $imgSrc }}" alt="{{ $product->name }}">
                     <p>{{ $product->name }}</p>
