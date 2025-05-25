@@ -43,12 +43,17 @@
     @if ($products->count())
         <div class="products-row">
             @foreach ($products as $product)
-                @php
-                    $image = $product->image_path;
-                    $isUrl = (strpos($image, 'http://') === 0 || strpos($image, 'https://') === 0);
-                    $imgSrc = $isUrl ? $image : asset('storage/' . $image);
-                @endphp
+            @php
+                $image = $product->images->first()->path ?? null;
 
+                if (empty($image)) {
+                    $imgSrc = asset('images/no-image.png');
+                } else if (filter_var($image, FILTER_VALIDATE_URL)) {
+                    $imgSrc = $image;
+                } else {
+                    $imgSrc = asset('storage/' . $image);
+                }
+            @endphp
                 <div class="product-card">
                     <a href="{{ route('products.show', $product->id) }}">
                         <img src="{{ $imgSrc }}" alt="{{ $product->name }}">
