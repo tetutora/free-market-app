@@ -14,6 +14,7 @@ use App\Http\Controllers\MypageController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\FollowController;
+use App\Http\Controllers\PurchaseController;
 
 Route::get('/email/verify', function () {
     return view('auth.verify-email');
@@ -45,6 +46,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/users/{user}/follow', [FollowController::class, 'toggleFollow'])->name('users.follow.toggle');
     Route::get('/products/create', [ProductController::class, 'create'])->name('products.create');
     Route::post('/products', [ProductController::class, 'store'])->name('products.store');
+    Route::get('/products/{product}/purchase', [PurchaseController::class, 'create'])->name('purchase.create');
+    Route::post('/products/{product}/purchase', [PurchaseController::class, 'store'])->name('purchase.store');
 });
 
 Route::get('/', [ProductController::class, 'index'])->name('home');

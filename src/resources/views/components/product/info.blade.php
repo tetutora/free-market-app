@@ -35,7 +35,7 @@
     <p class="product-description">{{ $product->description }}</p>
 
     @if($product->is_listed)
-        <button class="btn btn-primary">購入する</button>
+        <a href="{{ route('purchase.create', $product) }}" class="btn btn-primary">購入する</a>
     @else
         <p class="text-muted">売り切れです</p>
     @endif

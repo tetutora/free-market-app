@@ -1,8 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
     const imageInput = document.getElementById('imageInput');
     const container = document.getElementById('imagePreviewContainer');
-
-    // 選択済みファイルを保持（FormData送信用ではなく、プレビュー用）
     let selectedFiles = [];
 
     imageInput.addEventListener('change', function(event) {
@@ -13,18 +11,10 @@ document.addEventListener('DOMContentLoaded', function () {
             imageInput.value = '';
             return;
         }
-
-        // 追加分をselectedFilesにpush
         selectedFiles = selectedFiles.concat(files);
-
-        // プレビュー更新
         updatePreview();
-
-        // inputの値はリセットして再選択可能に
-        imageInput.value = '';
     });
 
-    // プレビュー表示関数
     function updatePreview() {
         container.innerHTML = '';
 
@@ -44,7 +34,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 img.style.borderRadius = '4px';
                 img.style.display = 'block';
 
-                // 削除ボタン
                 const btn = document.createElement('button');
                 btn.type = 'button';
                 btn.textContent = '×';
@@ -70,11 +59,8 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // 画像削除処理
     function removeImage(index) {
         selectedFiles.splice(index, 1);
         updatePreview();
     }
-
-    // フォーム送信は通常通り行うので、submitイベントの上書きは不要
 });
