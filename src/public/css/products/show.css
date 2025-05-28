@@ -327,3 +327,10 @@
     font-size: 14px;
     margin-top: 4px;
 }
+
+.sold-out-label {
+    color: red;
+    font-weight: bold;
+    font-size: 20px;
+    margin-top: 20px;
+}

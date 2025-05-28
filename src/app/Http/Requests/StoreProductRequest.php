@@ -25,8 +25,8 @@ class StoreProductRequest extends FormRequest
             'name' => 'required|string|max:255',
             'description' => 'required|string',
             'price' => 'required|integer|min:1',
-            'images' => 'required|array|max:10', // 配列として10枚まで
-            'images.*' => 'image|max:2048',      // 各画像のルール
+            'images' => 'required|array|max:10',
+            'images.*' => 'image|max:2048',
             'category_ids' => ['required', 'array'],
             'category_ids.*' => ['exists:categories,id'],
             'brand_ids' => ['required', 'array'],

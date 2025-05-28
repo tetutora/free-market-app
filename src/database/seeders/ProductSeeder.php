@@ -57,7 +57,6 @@ class ProductSeeder extends Seeder
                 'is_listed' => true,
             ]);
 
-            // pivotテーブルへランダムに複数紐付け
             $product->categories()->sync($categories->random(rand(1, 3))->pluck('id')->toArray());
             $product->brands()->sync($brands->random(rand(1, 3))->pluck('id')->toArray());
 

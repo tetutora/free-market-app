@@ -1,13 +1,10 @@
 <div class="product-info">
     <h1 class="product-name">{{ $product->name }}</h1>
-
     <div class="interaction-buttons">
         <x-product.favorite-button :product="$product" />
         <x-product.comment-icon :count="$product->comments()->count()" />
     </div>
-
     <p class="product-price">¥{{ number_format($product->price) }}</p>
-
     <p class="product-brand">
         ブランド: 
         @if($product->brands->isNotEmpty())
@@ -18,7 +15,6 @@
             なし
         @endif
     </p>
-
     <p class="product-category">
         カテゴリ: 
         @if($product->categories->isNotEmpty())
@@ -29,14 +25,20 @@
             なし
         @endif
     </p>
-
     <p class="product-condition">状態: {{ $product->condition }}</p>
-
     <p class="product-description">{{ $product->description }}</p>
-
-    @if($product->is_listed)
-        <a href="{{ route('purchase.create', $product) }}" class="btn btn-primary">購入する</a>
-    @else
-        <p class="text-muted">売り切れです</p>
-    @endif
+    <div class="interaction-buttons">
+        @if($product->is_listed)
+            @if(Auth::check() && Auth::id() === $product->user_id)
+                <!-- 出品者本人は購入不可なので購入ボタンは表示しない -->
+                <p class="info-message">※ご自身の商品は購入できません</p>
+            @else
+                <form action="{{ route('purchase.create', $product) }}" method="GET">
+                    <button type="submit" class="btn">購入する</button>
+                </form>
+            @endif
+        @else
+            <p class="sold-out-label">SOLD OUT</p>
+        @endif
+    </div>
 </div>

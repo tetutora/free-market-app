@@ -1,19 +1,86 @@
 @extends('layouts.app')
 
+@section('css')
+<link rel="stylesheet" href="{{ asset('css/purchases/create.css') }}">
+@endsection
+
 @section('content')
 <div class="purchase-page">
     <h1>{{ $product->name }} を購入</h1>
 
     <div class="product-summary">
+        @php
+        $images = $product->images;
+        $imgPaths = $images->map(function($img) {
+            if (empty($img->path)) {
+                return asset('images/no-image.png');
+            } elseif (filter_var($img->path, FILTER_VALIDATE_URL)) {
+                return $img->path;
+            } else {
+                return asset('storage/' . $img->path);
+            }
+        })->toArray();
+
+        if (empty($imgPaths)) {
+            $imgPaths = [asset('images/no-image.png')];
+        }
+        @endphp
+
+        <div class="product-images" data-images='@json($imgPaths)'>
+            <img id="main-image" src="{{ $imgPaths[0] }}" alt="{{ $product->name }}" class="main-image">
+
+            @if(count($imgPaths) > 1)
+                <div class="arrow left" id="prev-arrow">&#8249;</div>
+                <div class="arrow right" id="next-arrow">&#8250;</div>
+            @endif
+        </div>
+
         <p>価格: ¥{{ number_format($product->price) }}</p>
         <p>状態: {{ $product->condition }}</p>
         <p>説明: {{ $product->description }}</p>
     </div>
 
-    <form action="{{ route('purchase.store', $product) }}" method="POST">
+    <form id="payment-form" method="POST" action="{{ route('purchase.payment', $product) }}">
         @csrf
-        <button type="submit" class="btn btn-primary">購入を確定する</button>
-        <a href="{{ route('products.show', $product) }}" class="btn btn-secondary">戻る</a>
+
+        <div class="form-section">
+            <label for="address_id" class="section-title">配送先を選択してください</label>
+            <div class="address-select-wrapper">
+                <select name="address_id" id="address_id">
+                    @foreach ($addresses as $address)
+                        <option value="{{ $address->id }}" {{ old('address_id') == $address->id ? 'selected' : '' }}>
+                            {{ $address->postal_code }} {{ $address->prefecture }}{{ $address->city }}{{ $address->street }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+            @error('address_id')
+                <div class="error-message" style="color: red; margin-top: 4px;">{{ $message }}</div>
+            @enderror
+        </div>
+
+        <label class="section-title">支払い方法</label>
+        <div class="radio-group">
+            <div class="radio-option">
+                <input type="radio" name="payment_method" value="card" id="pay_card"
+                    {{ old('payment_method') === 'card' ? 'checked' : '' }}>
+                <label for="pay_card">クレジットカード</label>
+            </div>
+            <div class="radio-option">
+                <input type="radio" name="payment_method" value="konbini" id="pay_konbini"
+                    {{ old('payment_method') === 'konbini' ? 'checked' : '' }}>
+                <label for="pay_konbini">コンビニ払い</label>
+            </div>
+        </div>
+        @error('payment_method')
+            <div class="error-message" style="color: red; margin-top: 4px;">{{ $message }}</div>
+        @enderror
+
+        <button type="submit" style="margin-top: 20px;">購入を確定する</button>
     </form>
 </div>
+@endsection
+
+@section('js')
+<script src="{{ asset('js/purchases-create.js') }}"></script>
 @endsection
