@@ -130,4 +130,37 @@ class User extends Authenticatable implements MustVerifyEmail
 
         return $this;
     }
+
+    public function getMypageData(): array
+    {
+        return [
+            'unreadCount' => $this->notices()->whereNull('read_at')->count(),
+
+            'favorites' => $this->favorites()->get(),
+
+            'purchases' => $this->purchases()->where('status', 'completed')->with('product')->get(),
+
+            'products' => $this->products()->get(),
+
+            'inTransactions' => $this->inTransactions(),  // まとめて取得
+
+            'histories' => $this->viewHistories()->with('product')->orderByDesc('viewed_at')->take(1000)->get(),
+
+            'followings' => $this->followings()->get(),
+        ];
+    }
+
+    public function inTransactions()
+    {
+        return Purchase::where(function ($query) {
+            $query->where('user_id', $this->id)
+                ->orWhereHas('product', function ($q) {
+                    $q->where('user_id', $this->id);
+                });
+        })
+        ->where('status', '<>', 'completed')
+        ->with('product.images')
+        ->get();
+    }
+
 }

@@ -31,31 +31,24 @@
             <button class="tab-button" data-tab="histories">閲覧履歴</button>
             <button class="tab-button" data-tab="followings">フォロー中</button>
         </div>
-
         <div class="tab-content active" id="favorites">
-            @include('mypage.partials.products', ['products' => $favorites->pluck('product')])
+            @include('mypage.partials.products', ['products' => $favorites])
         </div>
-
         <div class="tab-content" id="purchases">
             @include('mypage.partials.products', ['products' => $purchases->pluck('product')])
         </div>
-
         <div class="tab-content" id="listings">
             @include('mypage.partials.products', ['products' => $products])
         </div>
-
         <div class="tab-content" id="in-transactions">
-            @include('mypage.partials.products', ['products' => $inTransactions->pluck('product')])
+            @include('mypage.partials.in_transactions', ['purchases' => $inTransactions])
         </div>
-
         <div class="tab-content" id="histories">
             @include('mypage.partials.products', ['products' => $histories->pluck('product')])
         </div>
-
         <div class="tab-content" id="followings">
             @include('mypage.partials.followings', ['followings' => $followings])
         </div>
-
     </div>
 </div>
 @endsection

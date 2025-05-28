@@ -11,8 +11,8 @@
             <h4>{{ $label }}</h4>
         @endif
 
-        <x-form.input 
-            label="郵便番号" 
+        <x-form.input
+            label="郵便番号"
             name="postal_code" 
             :value="old('postal_code', optional($address)->postal_code)" 
             :error="$errors->first('postal_code')" 

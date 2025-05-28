@@ -7,55 +7,67 @@ use App\Models\Product;
 use App\Models\Category;
 use App\Models\Brand;
 use Illuminate\Support\Facades\Auth;
-use App\Models\History;
 use App\Http\Requests\StoreProductRequest;
-use App\Models\ProductImage;
 
 class ProductController extends Controller
 {
     public function index(Request $request)
     {
-        $products = Product::with('images')
-            ->search($request->all())
-            ->paginate(20)
-            ->withQueryString();
+        $query = Product::with('images')
+            ->search($request->all());
 
-        $categories = Category::whereNull('parent_id')->get();
-        $brands = Brand::all();
+        if ($userId = Auth::id()) {
+            $query->where('user_id', '<>', $userId);
+        }
 
-        return view('products.index', compact('products', 'categories', 'brands'));
+        $products = $query->paginate(20)->withQueryString();
+
+        return view('products.index', [
+            'products' => $products,
+            'categories' => Category::whereNull('parent_id')->get(),
+            'brands' => Brand::all(),
+        ]);
     }
-
-
-        public function show(Product $product)
+    public function show(Product $product)
     {
         $product->load('images');
 
-        $user = Auth::user();
-
-        if ($user) {
-            History::updateOrCreate(
-                ['user_id' => $user->id, 'product_id' => $product->id],
-                ['viewed_at' => now()]
-            );
+        if ($user = Auth::user()) {
+            $product->recordViewHistory($user->id);
         }
 
-        $product->load('images');
-
-        $otherProducts = Product::where('user_id', $product->user_id)
-            ->where('id', '!=', $product->id)
-            ->latest()
-            ->take(10)
-            ->get();
-
-        return view('products.show', compact('product', 'otherProducts'));
+        return view('products.show', [
+            'product' => $product,
+            'otherProducts' => $product->getOtherProductsFromSameUser(),
+        ]);
     }
 
     public function create()
     {
-        $categories = Category::whereNull('parent_id')->get();
-        $brands = Brand::all();
-        $conditions = [
+        return view('products.create', $this->loadCommonFormData());
+    }
+
+    public function store(StoreProductRequest $request)
+    {
+        Product::createWithRelations($request, Auth::id());
+
+        return redirect()
+            ->route('products.index')
+            ->with('success', '商品を出品しました。');
+    }
+
+    private function loadCommonFormData(): array
+    {
+        return [
+            'categories' => Category::whereNull('parent_id')->get(),
+            'brands' => Brand::all(),
+            'conditions' => $this->conditions(),
+        ];
+    }
+
+    private function conditions(): array
+    {
+        return [
             '新品・未使用',
             '未使用に近い',
             '目立った傷や汚れなし',
@@ -63,37 +75,5 @@ class ProductController extends Controller
             '傷や汚れあり',
             '全体的に状態が悪い',
         ];
-
-        return view('products.create', compact('categories', 'brands', 'conditions'));
     }
-
-    public function store(StoreProductRequest $request)
-    {
-        $validated = $request->validated();
-
-        $product = Product::create([
-            'user_id' => Auth::id(),
-            'name' => $validated['name'],
-            'description' => $validated['description'],
-            'price' => $validated['price'],
-            'condition' => $validated['condition'],
-            'is_listed' => true,
-        ]);
-
-        $product->categories()->sync($validated['category_ids'] ?? []);
-        $product->brands()->sync($validated['brand_ids'] ?? []);
-
-        if ($request->hasFile('images')) {
-            foreach ($request->file('images') as $image) {
-                $path = $image->store('products', 'public');
-                ProductImage::create([
-                    'product_id' => $product->id,
-                    'path' => $path,
-                ]);
-            }
-        }
-
-        return redirect()->route('products.index')->with('success', '商品を出品しました。');
-    }
-
 }
