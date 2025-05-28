@@ -113,7 +113,7 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         if ($profilePicture) {
             if ($this->profile_picture) {
-                Storege::disk('public')->delete($this->profile_picture);
+                Storage::disk('public')->delete($this->profile_picture);
             }
             $path = $profilePicture->store('profile_pictures', 'public');
             $data['profile_picture'] = $path;

@@ -26,7 +26,7 @@
         <div class="tab-buttons">
             <button class="tab-button active" data-tab="favorites">お気に入り商品</button>
             <button class="tab-button" data-tab="purchases">購入商品</button>
-            <button class="tab-button" data-tab="products">出品商品</button>
+            <button class="tab-button" data-tab="listings">出品商品</button>
             <button class="tab-button" data-tab="in-transactions">取引中の商品</button>
             <button class="tab-button" data-tab="histories">閲覧履歴</button>
             <button class="tab-button" data-tab="followings">フォロー中</button>

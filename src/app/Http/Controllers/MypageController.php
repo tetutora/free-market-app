@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Auth;
-use App\Models\Product;
 use App\Models\Favorite;
-use App\Models\Purchase;
+use App\Models\Follow;
 use App\Models\History;
 use App\Models\Notification;
-use App\Models\Follow;
+use App\Models\Product;
+use App\Models\Purchase;
+use Illuminate\Support\Facades\Auth;
 
 class MypageController extends Controller
 {
@@ -19,7 +19,7 @@ class MypageController extends Controller
         $unreadCount = Notification::where('user_id', $user->id)
             ->whereNull('read_at')
             ->count();
-            
+
         $favorites = Favorite::with('product')->where('user_id', $user->id)->get();
         $purchases = $user->purchases()->with('product')->get();
         $products = $user->products()->get();
@@ -34,7 +34,7 @@ class MypageController extends Controller
             ->orderByDesc('viewed_at')
             ->take(10)
             ->get();
-        
+
         $followings = $user->followings()->get();
 
         return view('mypage.index', compact(

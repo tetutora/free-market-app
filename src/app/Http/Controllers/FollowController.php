@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\Follow;
 use App\Models\User;
+use Illuminate\Http\Request;
 
 class FollowController extends Controller
 {
@@ -11,20 +12,10 @@ class FollowController extends Controller
     {
         $authUser = auth()->user();
 
-        if ($authUser->id === $user->id) {
-            return redirect()->back()->with('error', '自分自身はフォローできません。');
-        }
+        [$success, $message] = Follow::toggle($authUser, $user);
 
-        if ($authUser->isFollowing($user->id)) {
-            // フォロー解除
-            $authUser->followings()->detach($user->id);
-            $message = 'フォローを解除しました。';
-        } else {
-            // フォロー
-            $authUser->followings()->attach($user->id, ['followed_at' => now()]);
-            $message = 'フォローしました！';
-        }
+        $statusType = $success ? 'status' : 'error';
 
-        return redirect()->back()->with('status', $message);
+        return redirect()->back()->with($statusType, $message);
     }
 }
