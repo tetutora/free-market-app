@@ -16,6 +16,10 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\FollowController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\WebhookController;
+
+Route::post('/stripe/webhook', [WebhookController::class, 'handle'])
+    ->withoutMiddleware(['web']);
 
 Route::get('/email/verify', function () {
     return view('auth.verify-email');

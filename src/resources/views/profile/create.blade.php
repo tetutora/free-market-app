@@ -19,42 +19,63 @@
             label="郵便番号"
             :value="$address->postal_code ?? ''"
             :error="$errors->first('postal_code')"
+            wrapperClass="form__group"
+            labelClass="form__label"
+            inputClass="form__input"
+            errorClass="form__error"
         />
         <x-form.input
             name="prefecture"
             label="都道府県"
             :value="$address->prefecture ?? ''"
             :error="$errors->first('prefecture')"
+            wrapperClass="form__group"
+            labelClass="form__label"
+            inputClass="form__input"
+            errorClass="form__error"
         />
         <x-form.input
             name="city"
             label="市区町村"
             :value="$address->city ?? ''"
             :error="$errors->first('city')"
+            wrapperClass="form__group"
+            labelClass="form__label"
+            inputClass="form__input"
+            errorClass="form__error"
         />
         <x-form.input
             name="street"
             label="番地"
             :value="$address->street ?? ''"
             :error="$errors->first('street')"
+            wrapperClass="form__group"
+            labelClass="form__label"
+            inputClass="form__input"
+            errorClass="form__error"
         />
         <x-form.input
             name="building"
             label="建物名"
             :value="$address->building ?? ''"
             :error="$errors->first('building')"
+            wrapperClass="form__group"
+            labelClass="form__label"
+            inputClass="form__input"
+            errorClass="form__error"
         />
 
-        <button type="submit" class="btn btn-primary">
+        <button type="submit" class="btn btn--primary">
             {{ isset($address) ? '更新する' : '追加する' }}
         </button>
-        <a href="{{ route('profile.edit') }}" class="btn btn-secondary">キャンセル</a>
+        <a href="{{ route('profile.edit') }}" class="btn btn--secondary">キャンセル</a>
     </form>
+
     @isset($address)
-    <form action="{{ route('addresses.destroy', $address) }}" method="POST" onsubmit="return confirm('本当にこの住所を削除してもよろしいですか？');"style="margin-top: 1rem;">
+    <form action="{{ route('addresses.destroy', $address) }}" method="POST" onsubmit="return confirm('本当にこの住所を削除してもよろしいですか？');" class="form" style="margin-top: 1rem;">
         @csrf
         @method('DELETE')
-        <button type="submit" class="btn btn-danger">削除する</button>
+        <button type="submit" class="btn btn--danger">削除する</button>
     </form>
     @endisset
 </div>

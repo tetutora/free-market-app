@@ -8,7 +8,7 @@
 <div class="user-profile-container">
     <div class="profile-header">
         <img src="{{ asset('storage/' . ($user->profile_image ?? 'images/default-profile.png')) }}" alt="プロフィール画像" class="profile-image">
-        <h1>{{ $user->name }}</h1>
+        <h1 class="profile-username">{{ $user->name }}</h1>
         @if ($user->profile_introduction)
             <p class="introduction">{{ $user->profile_introduction }}</p>
         @endif
@@ -28,7 +28,7 @@
         @endif
     </div>
     <div class="user-products-section">
-        <h2>出品中の商品</h2>
+        <h2 class="user-products-section-title">出品中の商品</h2>
         @if ($products->count())
             <div class="product-grid">
                 @foreach ($products as $product)
@@ -44,9 +44,9 @@
                         }
                     @endphp
                     <a href="{{ route('products.show', $product->id) }}" class="product-card">
-                        <img src="{{ $imgSrc }}" alt="{{ $product->name }}">
-                        <p>{{ $product->name }}</p>
-                        <p>¥{{ number_format($product->price) }}</p>
+                        <img src="{{ $imgSrc }}" alt="{{ $product->name }}" class="product-card-image">
+                        <p class="product-card-name">{{ $product->name }}</p>
+                        <p class="product-card-price">¥{{ number_format($product->price) }}</p>
                     </a>
                 @endforeach
             </div>

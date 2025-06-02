@@ -1,4 +1,3 @@
-/* ナチュラル背景 */
 body {
     background: linear-gradient(135deg, #fdf6ec, #f3eee3);
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -99,7 +98,6 @@ body {
     background: linear-gradient(135deg, #2e8b57, #1f6f4d);
 }
 
-/* ログインリンク */
 .login__link {
     margin-top: 1.8rem;
     text-align: center;

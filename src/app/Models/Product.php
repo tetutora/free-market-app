@@ -77,7 +77,6 @@ class Product extends Model
         return $this->hasMany(Favorite::class);
     }
 
-
     public function recordViewHistory($userId)
     {
         History::updateOrCreate(
@@ -94,7 +93,6 @@ class Product extends Model
             ->take($limit)
             ->get();
     }
-
 
     public static function createWithRelations($request, $userId)
     {
@@ -123,37 +121,76 @@ class Product extends Model
     }
 
     public function createKonbiniPaymentIntent($user, $addressId)
-    {
-        Stripe::setApiKey(config('services.stripe.secret'));
+{
+    Stripe::setApiKey(config('services.stripe.secret'));
 
-        return PaymentIntent::create([
-            'amount' => $this->price,
-            'currency' => 'jpy',
-            'metadata' => [
-                'product_id' => $this->id,
-                'user_id' => $user->id,
-                'address_id' => $addressId,
-            ],
-            'payment_method_types' => ['konbini'],
-            'payment_method_data' => [
-                'type' => 'konbini',
-                'billing_details' => [
-                    'name' => $user->name,
-                    'email' => $user->email,
-                ],
-            ],
-            'payment_method_options' => [
-                'konbini' => [
-                    'expires_after_days' => 7,
-                ],
-            ],
-            'confirm' => true,
-        ]);
-    }
+    $purchase = \App\Models\Purchase::create([
+    'user_id' => $user->id,
+    'product_id' => $this->id,
+    'address_id' => $addressId,
+    'price' => $this->price,
+    'payment_method' => 'konbini',
+    'status' => 'purchased',
+    'purchased_at' => now(),
+]);
+
+\Log::info('Purchase created', ['purchase' => $purchase->toArray(), 'purchase_id' => $purchase->id]);
+
+
+
+if (empty($purchase->id)) {
+    \Log::error('Purchase ID is empty!');
+    throw new \Exception('Purchase creation failed: ID is null.');
+}
+
+$name = $user->name ?? 'No name';
+$email = $user->email ?? 'no-email@example.com';
+
+$paymentIntent = PaymentIntent::create([
+    'amount' => (int)$this->price,
+    'currency' => 'jpy',
+    'payment_method_types' => ['konbini'],
+    'metadata' => [
+        'purchase_id' => (string)$purchase->id,
+        'user_id' => (string)$user->id,
+        'product_id' => (string)$this->id,
+        'address_id' => (string)$addressId,
+    ],
+    'payment_method_data' => [
+        'type' => 'konbini',
+        'billing_details' => [
+            'name' => $name,
+            'email' => $email,
+        ],
+    ],
+    'payment_method_options' => [
+        'konbini' => [
+            'expires_after_days' => 7,
+        ],
+    ],
+    'confirm' => true,
+]);
+
+\Log::info('PaymentIntent full data:', $paymentIntent->toArray());
+
+
+    return $paymentIntent;
+}
+
 
     public function createCheckoutSession($user, $addressId)
     {
         Stripe::setApiKey(config('services.stripe.secret'));
+
+        $purchase = \App\Models\Purchase::create([
+            'user_id' => $user->id,
+            'product_id' => $this->id,
+            'address_id' => $addressId,
+            'price' => $this->price,
+            'payment_method' => 'card',
+            'status' => 'purchased',
+            'purchased_at' => now(),
+        ]);
 
         return Session::create([
             'payment_method_types' => ['card'],
@@ -168,10 +205,19 @@ class Product extends Model
                 'quantity' => 1,
             ]],
             'mode' => 'payment',
-            'metadata' => [
+            'metadata' => [ // これはCheckout Sessionのmetadata
                 'product_id' => $this->id,
                 'user_id' => $user->id,
                 'address_id' => $addressId,
+                'purchase_id' => $purchase->id,
+            ],
+            'payment_intent_data' => [  // ここでPaymentIntentにmetadataを設定
+                'metadata' => [
+                    'purchase_id' => $purchase->id,
+                    'product_id' => $this->id,
+                    'user_id' => $user->id,
+                    'address_id' => $addressId,
+                ],
             ],
             'success_url' => route('purchase.success', [], true) . '?session_id={CHECKOUT_SESSION_ID}',
             'cancel_url' => route('products.show', $this),

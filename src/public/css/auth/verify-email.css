@@ -3,28 +3,23 @@
     margin: 3rem auto;
     padding: 2rem 2.5rem;
     background-color: #f5f2e7;
-    /* ベージュ */
     border-radius: 10px;
     box-shadow: 0 4px 12px rgba(139, 94, 60, 0.15);
-    /* ブラウン系の薄い影 */
     font-family: 'Noto Sans JP', sans-serif;
     color: #3b3b3b;
 }
 
 .verify-title {
     color: #3cb371;
-    /* メイングリーン */
     font-weight: 700;
     font-size: 2.2rem;
     margin-bottom: 1.5rem;
     border-bottom: 3px solid #8b5e3c;
-    /* ブラウンのライン */
     padding-bottom: 0.3rem;
 }
 
 .alert-success {
     background-color: #d4af37;
-    /* ゴールド */
     color: white;
     padding: 1rem 1.3rem;
     border-radius: 6px;

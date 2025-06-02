@@ -17,7 +17,7 @@
                 <img src="{{ $imgSrc }}" alt="{{ $product->name }}">
                 <p>{{ $product->name }}</p>
                 <p>¥{{ number_format($product->price) }}</p>
-                <p>取引状況: {{ $purchase->status }}</p>
+                <p>{{ $purchase->status }}</p>
             </a>
         @endforeach
     </div>

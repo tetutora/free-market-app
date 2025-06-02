@@ -11,46 +11,46 @@
     @yield('css')
 </head>
 
-<body>
-<header class="header">
-    <div class="header__inner">
-        <div class="header-utilities">
-            <a class="header__logo" href="/">
-                フリマ
-            </a>
-            <nav>
-                <ul class="header-nav">
-                    @if (Auth::check())
-                        <li class="header-nav__item">
-                            <a class="header-nav__link" href="/mypage">マイページ</a>
-                        </li>
-                        <li class="header-nav__item">
-                            <a class="header-nav__link" href="{{ route('products.create') }}">出品</a>
-                        </li>
-                        <li class="header-nav__item">
-                            <form method="POST" action="{{ route('logout') }}">
-                                @csrf
-                                <button class="header-nav__button">ログアウト</button>
-                            </form>
-                        </li>
-                    @else
-                        <li class="header-nav__item">
-                            <a class="header-nav__link" href="/login">ログイン</a>
-                        </li>
-                        <li class="header-nav__item">
-                            <a class="header-nav__link" href="/register">会員登録</a>
-                        </li>
-                    @endif
-                </ul>
-            </nav>
+<body class="body">
+    <header class="header">
+        <div class="header__inner">
+            <div class="header__utilities">
+                <a class="header__logo" href="/">
+                    フリマ
+                </a>
+                <nav class="header__nav">
+                    <ul class="header-nav">
+                        @if (Auth::check())
+                            <li class="header-nav__item">
+                                <a class="header-nav__link" href="/mypage">マイページ</a>
+                            </li>
+                            <li class="header-nav__item">
+                                <a class="header-nav__link" href="{{ route('products.create') }}">出品</a>
+                            </li>
+                            <li class="header-nav__item">
+                                <form method="POST" action="{{ route('logout') }}">
+                                    @csrf
+                                    <button class="header-nav__button">ログアウト</button>
+                                </form>
+                            </li>
+                        @else
+                            <li class="header-nav__item">
+                                <a class="header-nav__link" href="/login">ログイン</a>
+                            </li>
+                            <li class="header-nav__item">
+                                <a class="header-nav__link" href="/register">会員登録</a>
+                            </li>
+                        @endif
+                    </ul>
+                </nav>
+            </div>
         </div>
-    </div>
-</header>
+    </header>
 
-<main>
-    @yield('content')
-    @yield('js')
-</main>
+    <main class="main">
+        @yield('content')
+        @yield('js')
+    </main>
 </body>
 
 </html>
