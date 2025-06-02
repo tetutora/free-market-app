@@ -34,7 +34,6 @@ form#search-form input[type="text"] {
 form#search-form input[type="text"]:focus,
 form#search-form select:focus {
     border-color: #3cb371;
-    /* メイングリーン */
     box-shadow: 0 0 6px 2px rgba(60, 179, 113, 0.4);
     outline: none;
     max-width: 150px;
@@ -227,33 +226,4 @@ form#search-form button[type="submit"] {
     padding: 5px 10px;
     font-weight: bold;
     font-size: 1.2em;
-}
-
-@media (max-width: 992px) {
-    .product-card {}
-}
-
-@media (max-width: 768px) {
-    .product-card {}
-}
-
-@media (max-width: 480px) {
-    form#search-form {
-        flex-direction: column;
-        align-items: stretch;
-    }
-
-    form#search-form select,
-    form#search-form input[type="text"],
-    form#search-form a {
-        flex: 1 1 auto;
-        width: 100%;
-    }
-
-    .pagination li a,
-    .pagination li span {
-        padding: 6px 10px;
-        min-width: 28px;
-        font-size: 0.9rem;
-    }
 }

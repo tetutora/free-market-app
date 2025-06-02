@@ -55,7 +55,6 @@ class PurchaseController extends Controller
 
         $intent = $product->createKonbiniPaymentIntent(Auth::user(), $request->address_id);
 
-        Purchase::createFromStripeData($intent->metadata, $product->price, 'konbini', 'purchased');
         $product->markAsSold();
 
         return redirect()->route('receipt.show', ['id' => $intent->id]);

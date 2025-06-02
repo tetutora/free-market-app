@@ -2,10 +2,9 @@
     max-width: 600px;
     margin: 50px auto;
     padding: 30px;
-    background-color: #fff;
+    background-color: #f5f2e7;
     border-radius: 8px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    background-color: #f5f2e7;
 }
 
 .container__title {
@@ -23,7 +22,6 @@
     object-fit: cover;
     border: 2px solid #ccc;
     margin-bottom: 20px;
-
     display: block;
     margin-left: auto;
     margin-right: auto;
@@ -38,6 +36,7 @@
 .form-group {
     display: flex;
     flex-direction: column;
+    margin-bottom: 15px;
 }
 
 .form-group__label {
@@ -52,7 +51,8 @@
     border-radius: 5px;
     border: 1px solid #ddd;
     outline: none;
-    transition: all 0.3s ease;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    background-color: #fff;
 }
 
 .form-control:focus {
@@ -80,11 +80,13 @@
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    text-align: center;
+    display: inline-block;
 }
 
 .btn-primary {
     background-color: #3cb371;
-    color: white;
+    color: #fff;
     font-weight: bold;
 }
 
@@ -94,8 +96,7 @@
 
 .btn-secondary {
     background-color: #8b5e3c;
-    color: white;
-    text-align: center;
+    color: #fff;
     text-decoration: none;
 }
 
@@ -105,7 +106,7 @@
 
 .btn-danger {
     background-color: #e74c3c;
-    color: white;
+    color: #fff;
 }
 
 .btn-danger:hover {
@@ -114,7 +115,7 @@
 
 .alert-success {
     background-color: #32a15b;
-    color: white;
+    color: #fff;
     padding: 10px;
     border-radius: 5px;
     margin-bottom: 20px;
@@ -137,23 +138,4 @@
 
 #new-address-form:empty {
     display: none;
-}
-
-#new-address-form .form-group {
-    margin-bottom: 15px;
-}
-
-@media (max-width: 600px) {
-    .container {
-        padding: 20px;
-    }
-
-    .container__title {
-        font-size: 1.5rem;
-    }
-
-    .btn {
-        font-size: 0.9rem;
-        padding: 10px 0;
-    }
 }

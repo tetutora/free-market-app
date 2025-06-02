@@ -190,7 +190,7 @@ body {
 }
 
 .product-card p {
-    margin: 10px 12px 8px;
+    margin: 3px 12px 8px;
     color: #3b3b3b;
     font-weight: 600;
     font-size: 14px;
@@ -202,12 +202,10 @@ body {
 
 .product-card p:last-child {
     color: #3cb371;
-    /* メイングリーン */
     font-weight: 700;
     font-size: 16px;
 }
 
-/* 商品がない場合のテキスト */
 .mypage-container>p {
     text-align: center;
     font-size: 16px;

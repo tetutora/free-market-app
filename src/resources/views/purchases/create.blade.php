@@ -6,7 +6,7 @@
 
 @section('content')
 <div class="purchase-page">
-    <h1>{{ $product->name }} を購入</h1>
+    <h1 class="purchase-page__title">{{ $product->name }} を購入</h1>
 
     <div class="product-summary">
         @php
@@ -20,14 +20,10 @@
                 return asset('storage/' . $img->path);
             }
         })->toArray();
-
-        if (empty($imgPaths)) {
-            $imgPaths = [asset('images/no-image.png')];
-        }
         @endphp
 
         <div class="product-images" data-images='@json($imgPaths)'>
-            <img id="main-image" src="{{ $imgPaths[0] }}" alt="{{ $product->name }}" class="main-image">
+            <img id="main-image" src="{{ $imgPaths[0] }}" alt="{{ $product->name }}" class="product-image">
 
             @if(count($imgPaths) > 1)
                 <div class="arrow left" id="prev-arrow">&#8249;</div>
@@ -35,12 +31,12 @@
             @endif
         </div>
 
-        <p>価格: ¥{{ number_format($product->price) }}</p>
-        <p>状態: {{ $product->condition }}</p>
-        <p>説明: {{ $product->description }}</p>
+        <p class="product-summary__text">価格: ¥{{ number_format($product->price) }}</p>
+        <p class="product-summary__text">状態: {{ $product->condition }}</p>
+        <p class="product-summary__text">説明: {{ $product->description }}</p>
     </div>
 
-    <form id="payment-form" method="POST" action="{{ route('purchase.payment', $product) }}">
+    <form id="payment-form" method="POST" action="{{ route('purchase.payment', $product) }}" class="form">
         @csrf
 
         <div class="form-section">
@@ -55,7 +51,7 @@
                 </select>
             </div>
             @error('address_id')
-                <div class="error-message" style="color: red; margin-top: 4px;">{{ $message }}</div>
+                <div class="error-message">{{ $message }}</div>
             @enderror
         </div>
 
@@ -73,10 +69,10 @@
             </div>
         </div>
         @error('payment_method')
-            <div class="error-message" style="color: red; margin-top: 4px;">{{ $message }}</div>
+            <div class="error-message">{{ $message }}</div>
         @enderror
 
-        <button type="submit" style="margin-top: 20px;">購入を確定する</button>
+        <button type="submit" class="button--submit">購入を確定する</button>
     </form>
 </div>
 @endsection

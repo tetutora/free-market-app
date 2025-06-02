@@ -1,0 +1,60 @@
+.transaction-detail {
+    max-width: 600px;
+    margin: 30px auto;
+    padding: 20px;
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.transaction-detail h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.transaction-detail h2 {
+    font-size: 18px;
+    margin-top: 20px;
+    color: #555;
+}
+
+.transaction-detail p {
+    margin: 8px 0;
+    color: #444;
+}
+
+.transaction-detail img {
+    display: block;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    max-width: 100%;
+}
+
+.status-message {
+    font-weight: bold;
+    color: #1a73e8;
+    margin-top: 10px;
+}
+
+.transaction-detail form {
+    margin-top: 20px;
+}
+
+.transaction-detail button {
+    background-color: #1a73e8;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+.transaction-detail button:hover {
+    background-color: #155bb5;
+}
