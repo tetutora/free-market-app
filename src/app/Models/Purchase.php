@@ -24,8 +24,22 @@ class Purchase extends Model
         return $this->belongsTo(Product::class);
     }
 
+    public function ratings()
+    {
+        return $this->hasMany(Rating::class);
+    }
+
     public static function createFromStripeData($metadata, $price, $paymentMethod, $status)
     {
+        $existingPurchase = self::where('user_id', $metadata->user_id)
+                                ->where('product_id', $metadata->product_id)
+                                ->where('status', '<>', 'completed')
+                                ->first();
+
+        if ($existingPurchase) {
+            return $existingPurchase; // すでに取引がある場合は新規作成しない
+        }
+
         return self::create([
             'user_id' => $metadata->user_id,
             'product_id' => $metadata->product_id,

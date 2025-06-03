@@ -22,22 +22,16 @@
         } else {
             $imgSrc = asset('storage/' . $image);
         }
+
         $isSeller = Auth::id() === $purchase->product->user_id;
-        $statusMessages = $isSeller
-            ? [
-                'purchased' => '商品が購入されました。購入者の支払いをお待ちください。',
-                'paid' => '支払いが完了されました。商品を発送してください。',
-                'shipped' => '商品を発送しました。購入者の受け取り確認をお待ちください。',
-                'received' => '購入者が商品を受け取りました。購入者の評価をお待ちください。',
-                'completed' => '取引が完了しました。',
-            ]
-            : [
-                'purchased' => '商品を購入しました。支払いを完了してください。',
-                'paid' => '支払いが完了されました。出品者の発送をお待ちください。',
-                'shipped' => '商品が発送されました。到着までお待ちください。',
-                'received' => '商品を受け取りました。出品者の評価をお願いします。',
-                'completed' => '取引が完了しました。',
-            ];
+
+        $statusMessages = [
+            'purchased' => $isSeller ? '商品が購入されました。購入者の支払いをお待ちください。' : '商品を購入しました。支払いを完了してください。',
+            'paid' => $isSeller ? '支払いが完了されました。商品を発送してください。' : '支払いが完了されました。出品者の発送をお待ちください。',
+            'shipped' => $isSeller ? '商品を発送しました。購入者の受け取り確認をお待ちください。' : '商品が発送されました。到着までお待ちください。',
+            'received' => $isSeller ? '購入者が商品を受け取りました。購入者の評価をお待ちください。' : '商品を受け取りました。出品者の評価をお願いします。',
+            'completed' => '取引が完了しました。',
+        ];
 
         $statusMessage = $statusMessages[$purchase->status] ?? $purchase->status;
     @endphp
@@ -72,6 +66,50 @@
             <input type="hidden" name="status" value="received">
             <button type="submit">受け取り済みにする</button>
         </form>
+    @endif
+
+    @if($purchase->status === 'received' && !$userHasRated)
+    <h2>評価を入力</h2>
+    <form method="POST" action="{{ route('ratings.store') }}">
+        @csrf
+        <input type="hidden" name="purchase_id" value="{{ $purchase->id }}">
+        <label for="rating">評価（1〜5）:</label>
+        <select name="rating" id="rating">
+            @for ($i = 1; $i <= 5; $i++)
+                <option value="{{ $i }}">{{ $i }} 星</option>
+            @endfor
+        </select>
+        <label for="comment">コメント:</label>
+        <textarea name="comment" id="comment"></textarea>
+        <button type="submit">評価を送信</button>
+    </form>
+        <style>
+            .star-rating {
+                display: flex;
+                gap: 5px;
+                cursor: pointer;
+                font-size: 24px;
+                color: gray;
+            }
+            .star {
+                transition: color 0.2s;
+            }
+            .star.selected, .star:hover {
+                color: gold;
+            }
+        </style>
+
+        <script>
+            document.querySelectorAll(".star").forEach(star => {
+                star.addEventListener("click", function() {
+                    let rating = this.getAttribute("data-value");
+                    document.getElementById("rating-value").value = rating;
+
+                    document.querySelectorAll(".star").forEach(s => s.classList.remove("selected"));
+                    this.classList.add("selected");
+                });
+            });
+        </script>
     @endif
 </div>
 @endsection

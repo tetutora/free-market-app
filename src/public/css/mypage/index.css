@@ -231,3 +231,20 @@ body {
     border-radius: 50%;
     margin-bottom: 0.5rem;
 }
+
+.stars {
+    display: inline-flex;
+    gap: 5px;
+    font-size: 24px;
+    color: gray;
+}
+
+.star.filled {
+    color: gold;
+}
+
+.rating-number {
+    font-size: 18px;
+    font-weight: bold;
+    margin-left: 10px;
+}

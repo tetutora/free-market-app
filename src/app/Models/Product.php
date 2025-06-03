@@ -2,6 +2,14 @@
 
 namespace App\Models;
 
+use App\Models\User;
+use App\Models\Brand;
+use App\Models\Category;
+use App\Models\Favorite;
+use App\Models\Comment;
+use App\Models\ProductImage;
+use App\Models\Purchase;
+use App\Models\History;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Stripe\Stripe;
@@ -121,68 +129,55 @@ class Product extends Model
     }
 
     public function createKonbiniPaymentIntent($user, $addressId)
-{
-    Stripe::setApiKey(config('services.stripe.secret'));
+    {
+        Stripe::setApiKey(config('services.stripe.secret'));
 
-    $purchase = \App\Models\Purchase::create([
-    'user_id' => $user->id,
-    'product_id' => $this->id,
-    'address_id' => $addressId,
-    'price' => $this->price,
-    'payment_method' => 'konbini',
-    'status' => 'purchased',
-    'purchased_at' => now(),
-]);
+        $purchase = Purchase::create([
+            'user_id' => $user->id,
+            'product_id' => $this->id,
+            'address_id' => $addressId,
+            'price' => $this->price,
+            'payment_method' => 'konbini',
+            'status' => 'purchased',
+            'purchased_at' => now(),
+        ]);
 
-\Log::info('Purchase created', ['purchase' => $purchase->toArray(), 'purchase_id' => $purchase->id]);
+        $name = $user->name ?? 'No name';
+        $email = $user->email ?? 'no-email@example.com';
 
+        $paymentIntent = PaymentIntent::create([
+            'amount' => (int)($this->price),
+            'currency' => 'jpy',
+            'payment_method_types' => ['konbini'],
+            'metadata' => [
+                'purchase_id' => (string)$purchase->id,
+                'user_id' => (string)$user->id,
+                'product_id' => (string)$this->id,
+                'address_id' => (string)$addressId,
+            ],
+            'payment_method_data' => [
+                'type' => 'konbini',
+                'billing_details' => [
+                    'name' => $name,
+                    'email' => $email,
+                ],
+            ],
+            'payment_method_options' => [
+                'konbini' => [
+                    'expires_after_days' => 7,
+                ],
+            ],
+            'confirm' => true,
+        ]);
 
-
-if (empty($purchase->id)) {
-    \Log::error('Purchase ID is empty!');
-    throw new \Exception('Purchase creation failed: ID is null.');
-}
-
-$name = $user->name ?? 'No name';
-$email = $user->email ?? 'no-email@example.com';
-
-$paymentIntent = PaymentIntent::create([
-    'amount' => (int)$this->price,
-    'currency' => 'jpy',
-    'payment_method_types' => ['konbini'],
-    'metadata' => [
-        'purchase_id' => (string)$purchase->id,
-        'user_id' => (string)$user->id,
-        'product_id' => (string)$this->id,
-        'address_id' => (string)$addressId,
-    ],
-    'payment_method_data' => [
-        'type' => 'konbini',
-        'billing_details' => [
-            'name' => $name,
-            'email' => $email,
-        ],
-    ],
-    'payment_method_options' => [
-        'konbini' => [
-            'expires_after_days' => 7,
-        ],
-    ],
-    'confirm' => true,
-]);
-
-\Log::info('PaymentIntent full data:', $paymentIntent->toArray());
-
-
-    return $paymentIntent;
-}
-
+        return $paymentIntent;
+    }
 
     public function createCheckoutSession($user, $addressId)
     {
         Stripe::setApiKey(config('services.stripe.secret'));
 
-        $purchase = \App\Models\Purchase::create([
+        $purchase = Purchase::create([
             'user_id' => $user->id,
             'product_id' => $this->id,
             'address_id' => $addressId,
@@ -200,18 +195,18 @@ $paymentIntent = PaymentIntent::create([
                     'product_data' => [
                         'name' => $this->name,
                     ],
-                    'unit_amount' => $this->price,
+                    'unit_amount' => (int)($this->price)
                 ],
                 'quantity' => 1,
             ]],
             'mode' => 'payment',
-            'metadata' => [ // これはCheckout Sessionのmetadata
+            'metadata' => [
                 'product_id' => $this->id,
                 'user_id' => $user->id,
                 'address_id' => $addressId,
                 'purchase_id' => $purchase->id,
             ],
-            'payment_intent_data' => [  // ここでPaymentIntentにmetadataを設定
+            'payment_intent_data' => [
                 'metadata' => [
                     'purchase_id' => $purchase->id,
                     'product_id' => $this->id,
