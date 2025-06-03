@@ -19,22 +19,6 @@ use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\WebhookController;
 use App\Http\Controllers\RatingController;
 
-Route::post('/stripe/webhook', [WebhookController::class, 'handle'])
-    ->withoutMiddleware(['web']);
-
-Route::get('/email/verify', function () {
-    return view('auth.verify-email');
-})->middleware('auth')->name('verification.notice');
-
-Route::get('/email/verify/{id}/{hash}', VerifyEmailController::class)
-    ->middleware(['auth', 'signed', 'throttle:6,1'])
-    ->name('verification.verify');
-
-Route::post('/email/verification-notification', function (Request $request) {
-    $request->user()->sendEmailVerificationNotification();
-    return back()->with('message', '確認リンクを再送信しました。');
-})->middleware(['auth', 'throttle:6,1'])->name('verification.send');
-
 Route::middleware(['auth', 'verified'])->group(function () {
     // プロフィール編集
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
