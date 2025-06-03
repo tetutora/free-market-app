@@ -8,7 +8,6 @@
 <div class="mypage-container">
     <div class="notification-icon-wrapper">
         <a href="{{ route('notifications.index') }}" title="お知らせ">
-            <!-- SVGアイコン -->
             @if ($unreadCount > 0)
                 <span class="notification-badge">{{ $unreadCount }}</span>
             @endif
@@ -17,6 +16,24 @@
     <div class="profile-section">
         <img src="{{ asset('storage/' . ($user->profile_image ?? 'images/default-profile.png')) }}" alt="プロフィール画像" class="profile-image">
         <h2>{{ $user->name }}</h2>
+
+        @if($user->receivedRatings()->count() > 0)
+            <div class="user-rating">
+                @php
+                    $averageRating = $user->receivedRatings()->avg('rating') ?? 0;
+                    $roundedRating = floor($averageRating);
+                @endphp
+                <span class="stars">
+                    @for ($i = 1; $i <= 5; $i++)
+                        <span class="star {{ $i <= $roundedRating ? 'filled' : '' }}">★</span>
+                    @endfor
+                </span>
+                <span class="rating-number">（{{ number_format($averageRating, 1) }}）</span>
+            </div>
+        @else
+            <p>まだ評価はありません。</p>
+        @endif
+
         <a href="{{ route('profile.edit') }}" class="btn">プロフィール設定</a>
     </div>
 

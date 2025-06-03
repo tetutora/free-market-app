@@ -17,6 +17,7 @@ use App\Http\Controllers\FollowController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\WebhookController;
+use App\Http\Controllers\RatingController;
 
 Route::post('/stripe/webhook', [WebhookController::class, 'handle'])
     ->withoutMiddleware(['web']);
@@ -76,6 +77,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // 取引画面・ステータス更新
     Route::get('/transactions/{purchase}', [TransactionController::class, 'show'])->name('transactions.show');
     Route::put('/transactions/{purchase}/status', [TransactionController::class, 'updateStatus'])->name('transactions.updateStatus');
+    Route::post('/ratings', [RatingController::class, 'store'])->name('ratings.store');
 });
 
 Route::get('/', [ProductController::class, 'index'])->name('home');

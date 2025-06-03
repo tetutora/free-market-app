@@ -163,4 +163,16 @@ class User extends Authenticatable implements MustVerifyEmail
         ->get();
     }
 
+    public function averageRating()
+    {
+        $rating = $this->hasManyThrough(Rating::class, Purchase::class)
+                    ->avg('rating');
+        return round($rating, 1);
+    }
+
+    public function receivedRatings()
+    {
+        return $this->hasManyThrough(Rating::class, Purchase::class, 'user_id', 'purchase_id')
+                    ->whereColumn('ratings.user_id', '!=', 'purchases.user_id');
+    }
 }
