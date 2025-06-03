@@ -22,11 +22,7 @@
         } else {
             $imgSrc = asset('storage/' . $image);
         }
-
-        // ユーザーが出品者か購入者かを判定
         $isSeller = Auth::id() === $purchase->product->user_id;
-
-        // ステータスに応じたメッセージ（出品者・購入者で分岐）
         $statusMessages = $isSeller
             ? [
                 'purchased' => '商品が購入されました。購入者の支払いをお待ちください。',
@@ -51,7 +47,6 @@
     <h2>取引状況</h2>
     <p class="status-message">{{ $statusMessage }}</p>
 
-    {{-- 出品者用：支払い完了 → 発送 --}}
     @if($isSeller && $purchase->status === 'paid')
         <form method="POST" action="{{ route('transactions.updateStatus', $purchase->id) }}">
             @csrf
@@ -61,7 +56,6 @@
         </form>
     @endif
 
-    {{-- 購入者用：発送済み → 受取済み --}}
     @if(!$isSeller && $purchase->status === 'purchased')
         <form method="POST" action="{{ route('transactions.updateStatus', $purchase->id) }}">
             @csrf
