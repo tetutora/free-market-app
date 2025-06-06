@@ -40,7 +40,6 @@ class TransactionController extends Controller
             }
             $purchase->status = 'received';
 
-            // ✅ 評価済みなら `completed` に変更
             if ($purchase->buyer_reviewed && $purchase->seller_reviewed) {
                 $purchase->status = 'completed';
             }

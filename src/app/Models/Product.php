@@ -11,6 +11,7 @@ use App\Models\ProductImage;
 use App\Models\Purchase;
 use App\Models\History;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Facades\Auth;
 use Stripe\Stripe;
 use Stripe\PaymentIntent;
@@ -18,6 +19,8 @@ use Stripe\Checkout\Session;
 
 class Product extends Model
 {
+    use HasFactory;
+
     protected $fillable = [
         'user_id', 'name', 'description', 'price', 'image_path',
         'condition', 'is_listed'
