@@ -14,7 +14,7 @@
         </a>
     </div>
     <div class="profile-section">
-        <img src="{{ asset('storage/' . ($user->profile_image ?? 'images/default-profile.png')) }}" alt="プロフィール画像" class="profile-image">
+        <img src="{{ asset('storage/' . ($user->profile_picture ?? 'images/default-profile.png')) }}" alt="プロフィール画像" class="profile-image">
         <h2>{{ $user->name }}</h2>
 
         @if($user->receivedRatings()->count() > 0)
